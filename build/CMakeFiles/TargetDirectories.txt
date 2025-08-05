@@ -1,0 +1,7 @@
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/SNCuts.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/edit_cache.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/rebuild_cache.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/list_install_components.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/install.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/install/local.dir
+/sps/nemo/scratch/ykozina/Falaise/tutorial/SNCuts/build/CMakeFiles/install/strip.dir
