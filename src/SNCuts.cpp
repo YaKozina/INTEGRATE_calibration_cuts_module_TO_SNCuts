@@ -1,4 +1,21 @@
 // Interface from Falaise
+//*************************************************************
+// Falaise
+#include <falaise/snemo/services/service_handle.h>
+#include <falaise/snemo/datamodels/particle_track_data.h>
+#include <falaise/snemo/datamodels/precalibrated_data.h>
+#include <falaise/snemo/datamodels/tracker_trajectory_data.h>
+#include <falaise/snemo/datamodels/geomid_utils.h>
+#include <falaise/snemo/datamodels/vertex_utils.h>
+
+// Bayeux
+#include <geomtools/geometry_service.h>
+#include <datatools/clhep_units.h>
+
+#include <falaise/snemo/services/geometry.h>
+
+//***********************************************************
+
 #include "SNCuts.hh"
 #include "Event.hh"
 #include "PTDParticle.hh"
@@ -28,6 +45,59 @@ void SNCuts::initialize(
 )
 {
     this->_set_initialized(true);
+//*******************************************************************************************    
+    geo_manager_ = snemo::service_handle<snemo::geometry_svc>{flServices};
+    
+
+calib_source_Y_.resize(calib_source_rows_, std::vector<double>(calib_source_columns_));
+calib_source_Z_.resize(calib_source_rows_, std::vector<double>(calib_source_columns_));
+
+if (myConfig.has_key("source_pos_path")) {
+  source_pos_path_ = myConfig.fetch_string("source_pos_path");
+} else {
+  source_pos_path_ = "";
+}
+
+if (source_pos_path_.empty()) {
+
+  const geomtools::id_mgr & mgr = geo_manager_->get_id_mgr();
+  const geomtools::mapping & mapping = geo_manager_->get_mapping();
+
+  for (int i = 0; i < calib_source_rows_; ++i) {
+    for (int j = 0; j < calib_source_columns_; ++j) {
+      geomtools::geom_id spot_id;
+      mgr.make_id("source_calibration_spot", spot_id);
+      mgr.set(spot_id, "module", 0);
+      mgr.set(spot_id, "track", j);
+      mgr.set(spot_id, "position", i);
+      const geomtools::geom_info & info = mapping.get_geom_info(spot_id);
+      const geomtools::placement & place = info.get_world_placement();
+      const geomtools::vector_3d & pos = place.get_translation();
+      calib_source_Y_[i][j] = pos.getY();
+      calib_source_Z_[i][j] = pos.getZ();
+    }
+  }
+} else {
+  std::ifstream source_positions_file(source_pos_path_);
+  if (source_positions_file.fail()) {
+    throw std::logic_error(source_pos_path_ + " does not exist!");
+  }
+
+  int i = 0;
+  std::string line;
+
+  while (getline(source_positions_file, line)) {
+    calib_source_Y_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(0, line.find(";")));
+    calib_source_Z_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(line.find(";") + 1));
+    i++;
+  }
+
+  source_positions_file.close();
+}
+
+//********************************************************************************************    
+    
+    
     // std::cout << " -----------------------------" << std::endl;
     // std::cout << " Using the following filters: " << std::endl;
     try // myConfig.fetch(configKeyword, classVariable) looks for the config keyword
@@ -276,7 +346,8 @@ void SNCuts::initialize(
 
 //*******************************************************************
 
-//iterate through all particles and find those coming from a calibration source and hitting an OM
+//iterate through all particles and find those coming from a calibration source (a) and hitting an OM (b)
+//finding the vertex close to the calib source (a)
 
 try
 {
@@ -305,10 +376,25 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
 {
     eventFilter = new Filters(_filtersToBeUsed);  // construct Filters instance which holds the filters
 
+
+
+
+
+
+
 //new 
 //******************************************************
 eventFilter->set_source_cut_ellipse_Y(_source_cut_ellipse_Y_);
 eventFilter->set_source_cut_ellipse_Z(_source_cut_ellipse_Z_);
+
+//elips parameters SHOULD BE IN SNCUTS.HH ??
+//double source_cut_ellipse_Y_ = 25.0; // mm by default;
+//double source_cut_ellipse_Z_ = 30.0; // mm by default;
+
+
+eventFilter->set_useEventHasVertexCloseToCalibSource(_useEventHasVertexCloseToCalibSource_);
+eventFilter->set_calib_source_Y(calib_source_Y_);
+eventFilter->set_calib_source_Z(calib_source_Z_);
 
 
 //******************************************************

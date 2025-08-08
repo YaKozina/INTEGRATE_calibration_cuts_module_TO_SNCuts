@@ -64,8 +64,25 @@ class Filters: public TObject
         bool event_passed_filters                   (Event& _event);
 
 
+
+//*********************************************************************************
 	void set_source_cut_ellipse_Y(double _cut_ellipse_Y);
 	void set_source_cut_ellipse_Z(double _cut_ellipse_Z);
+
+	void set_calib_source_Y(const std::vector<std::vector<double>>& Y);
+	void set_calib_source_Z(const std::vector<std::vector<double>>& Z);
+	
+//*********************************************************************************	
+
+
+//****************************************************************
+
+bool event_has_vertex_close_to_calib_source(Event& _event);
+void set_useEventHasVertexCloseToCalibSource(bool value);
+
+//********************************************************************************************************
+
+
 
 
 
@@ -110,11 +127,8 @@ class Filters: public TObject
  bool useEventHasVertexCloseToCalibSource = false;
 //****************************************************************
 
-//elips parameters
-double source_cut_ellipse_Y_ = 25.0; // mm by default;
-double source_cut_ellipse_Z_ = 30.0; // mm by default;
-
-
+double source_cut_ellipse_Y_ = 25.0;
+double source_cut_ellipse_Z_ = 30.0;
 
 std::vector<std::vector<double>> calib_source_Y_;
 std::vector<std::vector<double>> calib_source_Z_;
@@ -124,16 +138,6 @@ std::vector<std::vector<double>> calib_source_Z_;
 
 static const int calib_source_rows_ = 7;
 static const int calib_source_columns_ = 6;
-
-
-//****************************************************************
-
-bool event_has_vertex_close_to_calib_source(Event& _event);
-void set_useEventHasVertexCloseToCalibSource(bool value);
-
-
-
-//*********************************************************************************************************
 
 
 

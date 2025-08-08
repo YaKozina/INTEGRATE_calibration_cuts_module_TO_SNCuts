@@ -7,6 +7,7 @@
 #include "bayeux/geomtools/manager.h"
 #include "bayeux/geomtools/geom_id.h"
 
+
 #include "falaise/snemo/processing/module.h"
 #include "falaise/snemo/datamodels/particle_track_data.h"
 #include "falaise/snemo/datamodels/particle_track.h"
@@ -29,7 +30,6 @@
 #include "Constants.hh"
 
 
-
 class SNCuts : public dpp::base_module
 {
 public:
@@ -46,6 +46,11 @@ public:
         const datatools::properties &myConfig,
         datatools::service_manager &flServices,
         dpp::module_handle_dict_type &what);
+
+//********************************************************
+std::string source_pos_path_; 
+//********************************************************
+
 
     //! Reset the module
     virtual void reset();
@@ -113,9 +118,22 @@ private:
 //***************************************************************
     bool use_calibration_source_cut_ = false;
     bool _useEventHasVertexCloseToCalibSource_ = false;
-//******
-    double _source_cut_ellipse_Y_;
-    double _source_cut_ellipse_Z_;
+    
+//************
+    double _source_cut_ellipse_Y_ = 25.0;
+    double _source_cut_ellipse_Z_ = 30.0;
+    
+    
+std::vector<std::vector<double>> calib_source_Y_;
+std::vector<std::vector<double>> calib_source_Z_;
+
+
+int calib_source_rows_ = 7;
+int calib_source_columns_ = 6;
+
+//************
+
+snemo::service_handle<snemo::geometry_svc> geo_manager_;
 
 //************************************************************
 

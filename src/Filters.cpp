@@ -542,6 +542,23 @@ void Filters::set_n_escaped_particles(int _nEscapedParticles)
     nEscapedParticles = _nEscapedParticles;
 }
 
+
+//***************************************************************************
+
+void Filters::set_calib_source_Y(const std::vector<std::vector<double>>& Y) {
+    calib_source_Y_ = Y;
+}
+
+void Filters::set_calib_source_Z(const std::vector<std::vector<double>>& Z) {
+    calib_source_Z_ = Z;
+}
+
+//***************************************************************************
+
+
+
+
+
 bool Filters::event_passed_filters(Event& _event) {
     if ( useEventHasTwoNegativeParticles && !event_has_two_negative_particles(_event) )         // event doesn't pass filter if filter should be used AND is not fulilled!
     {
