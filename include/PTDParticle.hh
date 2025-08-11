@@ -31,7 +31,10 @@ class PTDParticle: public TObject
 		void    set_calo_vertex_position(double _X, double _Y, double _Z);
 		bool 	has_foil_vertex();
 		bool 	has_calo_vertex();
-
+//*********************************************************************************
+		void    set_calib_vertex_position(double _X, double _Y, double _Z);
+		bool    has_calib_vertex();
+//*********************************************************************************
         int     	get_charge();
         int 		get_associated_calo_hits_number();    					// get the number of calo hits per PTD entry (this may not be 1)
         double 		get_energy();
@@ -43,6 +46,11 @@ class PTDParticle: public TObject
 		
 		TVector3    get_foil_vertex_position();
 		TVector3    get_calo_vertex_position();
+//****************************************************
+		TVector3 get_calib_vertex_position();
+//****************************************************
+
+
 
 	private:
 		int     charge;
@@ -58,6 +66,10 @@ class PTDParticle: public TObject
 
 		TVector3 foilVertexPosition;
 		TVector3 caloVertexPosition;
+//****************************************************	
+		bool hasCalibVertex = false;
+		TVector3 calibVertexPosition;
+//****************************************************	
     
     
 	ClassDef(PTDParticle,1);

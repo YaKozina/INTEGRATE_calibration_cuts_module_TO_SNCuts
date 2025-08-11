@@ -18,8 +18,8 @@
 #include "falaise/snemo/datamodels/calibrated_data.h"
 #include "falaise/snemo/datamodels/geomid_utils.h"
 // #include "falaise/snemo/datamodels/vertex_utils.h"
-
-
+#include <falaise/snemo/services/service_handle.h>
+#include <falaise/snemo/services/geometry.h>
 
 #include "Event.hh"
 #include "PTDParticle.hh"
@@ -28,6 +28,12 @@
 #include "CDBank.hh"
 #include "CDHit.hh"
 #include "Constants.hh"
+
+#include <vector>
+#include <string>
+#include <fstream>  
+#include <algorithm> 
+#include <list>     
 
 
 class SNCuts : public dpp::base_module

@@ -84,6 +84,17 @@ void        PTDParticle::set_foil_vertex_position(double _X, double _Y, double _
     foilVertexPosition.SetXYZ(_X, _Y, _Z);
 }
 
+//******************************************************************
+
+void PTDParticle::set_calib_vertex_position(double _X, double _Y, double _Z)
+{
+	hasCalibVertex = true;
+	calibVertexPosition.SetXYZ(_X, _Y, _Z);
+}
+
+//******************************************************************
+
+
 void        PTDParticle::set_calo_vertex_position(double _X, double _Y, double _Z)
 {
     hasCaloVertex = true;
@@ -94,6 +105,12 @@ bool 	    PTDParticle::has_foil_vertex()
 {
     return hasFoilVertex;
 }
+//********************************************************************
+bool PTDParticle::has_calib_vertex()
+{
+    return hasCalibVertex;
+}
+//********************************************************************
 bool 	PTDParticle::has_calo_vertex()
 {
     return hasCaloVertex;
@@ -114,6 +131,12 @@ TVector3    PTDParticle::get_foil_vertex_position()
     return foilVertexPosition;
 }
 
+//*********************************************************
+TVector3 PTDParticle::get_calib_vertex_position()
+{
+    return calibVertexPosition;
+}
+//*********************************************************
 TVector3    PTDParticle::get_calo_vertex_position()
 {
     return caloVertexPosition;

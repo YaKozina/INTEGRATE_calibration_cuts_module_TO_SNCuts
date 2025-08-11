@@ -13,6 +13,10 @@
 
 // Standard headers
 #include "iostream"
+#include <vector>
+#include <string>
+#include <cmath>
+
 // #include <functional>
 
 using namespace std;

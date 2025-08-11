@@ -433,6 +433,12 @@ eventFilter->set_calib_source_Z(calib_source_Z_);
                   << caloPos.Y() << ", "
                   << caloPos.Z() << "\n";
     }
+    
+    if (p.has_calib_vertex()) {
+    auto c = p.get_calib_vertex_position();
+    std::cout << "    Calib Source Vertex (X, Y, Z): "
+              << c.X() << ", " << c.Y() << ", " << c.Z() << "\n";
+}
 }
 
 //*************************************************************************************************
@@ -528,8 +534,39 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                             vtx.get_spot().get_position().y(),
                             vtx.get_spot().get_position().z());
                     }
+                    
+                    //************************************************************************                
+                else if (vtx.is_on_reference_source_plane()) {
+            double ver_y = vtx.get_spot().get_position().y();
+            double ver_z = vtx.get_spot().get_position().z();
+            bool is_close = false;
+
+            for (int i = 0; i < calib_source_rows_; ++i) {
+                for (int j = 0; j < calib_source_columns_; ++j) {
+                    double dy = ver_y - calib_source_Y_[i][j];
+                    double dz = ver_z - calib_source_Z_[i][j];
+                    double dist = (dy * dy) / (_source_cut_ellipse_Y_ * _source_cut_ellipse_Y_) + (dz * dz) / (_source_cut_ellipse_Z_ * _source_cut_ellipse_Z_);
+                    if (dist < 1.0) {
+                        is_close = true;
+                        break;
+                    }
                 }
+                if (is_close) break;
             }
+
+            if (is_close) {
+                ptdparticle->set_calib_vertex_position(
+                    vtx.get_spot().get_position().x(),
+                    vtx.get_spot().get_position().y(),
+                    vtx.get_spot().get_position().z());
+            }
+        }
+//************************************************************************   
+                    
+                    
+   }            
+}
+
 
             if (track.has_associated_calorimeter_hits())
             {

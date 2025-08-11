@@ -393,10 +393,10 @@ bool Filters::event_has_vertex_close_to_calib_source(Event& _event)
 {
     for (auto& particle : _event.get_particles())
     {
-        if (!particle.has_foil_vertex()) continue;
+        if (!particle.has_calib_vertex()) continue;
 
-        double ver_y = particle.get_foil_vertex_position().Y();
-        double ver_z = particle.get_foil_vertex_position().Z();
+        double ver_y = particle.get_calib_vertex_position().Y();
+        double ver_z = particle.get_calib_vertex_position().Z();
 
         for (int i = 0; i < calib_source_rows_; ++i)
         {
