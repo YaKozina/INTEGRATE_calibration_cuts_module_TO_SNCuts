@@ -60,6 +60,8 @@ if (myConfig.has_key("source_pos_path")) {
 
 if (source_pos_path_.empty()) {
 
+    std::cout << "[SNCuts]Falaise geometry service" << std::endl;
+
   const geomtools::id_mgr & mgr = geo_manager_->get_id_mgr();
   const geomtools::mapping & mapping = geo_manager_->get_mapping();
 
@@ -82,6 +84,9 @@ if (source_pos_path_.empty()) {
   if (source_positions_file.fail()) {
     throw std::logic_error(source_pos_path_ + " does not exist!");
   }
+
+    std::cout << "[SNCuts] txt file data " << source_pos_path_ << std::endl;
+
 
   int i = 0;
   std::string line;
@@ -356,19 +361,14 @@ try
     {
         _filtersToBeUsed.push_back("useEventHasVertexCloseToCalibSource");
     }
-//*******
+
     myConfig.fetch("source_cut_ellipse_Y", this->_source_cut_ellipse_Y_);
     myConfig.fetch("source_cut_ellipse_Z", this->_source_cut_ellipse_Z_);
-    // std::cout << "Using vertex calibration cut: ellipse Y = " << _source_cut_ellipse_Y_ << ", Z = " << _source_cut_ellipse_Z_ << std::endl;
+    //std::cout << "Using vertex calibration cut: ellipse Y = " << _source_cut_ellipse_Y_ << ", Z = " << _source_cut_ellipse_Z_ << std::endl;
 }
 catch (std::logic_error &e)
 {
 }
-//*******************************************************************
-
-
-
-    // std::cout << " -----------------------------" << std::endl;
 
 }
 
@@ -376,21 +376,10 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
 {
     eventFilter = new Filters(_filtersToBeUsed);  // construct Filters instance which holds the filters
 
-
-
-
-
-
-
 //new 
 //******************************************************
 eventFilter->set_source_cut_ellipse_Y(_source_cut_ellipse_Y_);
 eventFilter->set_source_cut_ellipse_Z(_source_cut_ellipse_Z_);
-
-//elips parameters SHOULD BE IN SNCUTS.HH ??
-//double source_cut_ellipse_Y_ = 25.0; // mm by default;
-//double source_cut_ellipse_Z_ = 30.0; // mm by default;
-
 
 eventFilter->set_useEventHasVertexCloseToCalibSource(_useEventHasVertexCloseToCalibSource_);
 eventFilter->set_calib_source_Y(calib_source_Y_);
@@ -413,14 +402,48 @@ eventFilter->set_calib_source_Z(calib_source_Z_);
     //// If event passes all configured filters it is kept in the brio file, it is removed otherwise
     if (eventFilter->event_passed_filters(event))
     {
-        // std::cout << "Event: " << eventNo << " ++PASSED++! " << std::endl;
+    
+                             
+         std::cout << "Event: " << eventNo << " ++PASSED++! " << std::endl;
+         
+         //check coordinates of the passed vertexes
+         
+         
+         std::vector<PTDParticle> particles = event.get_particles();
+        
+        for (size_t i = 0; i < particles.size(); ++i)
+{
+    PTDParticle &p = particles[i];
+    std::cout << "  Particle " << i << ":\n";
+
+    if (p.has_foil_vertex())
+    {
+        TVector3 foilPos = p.get_foil_vertex_position();
+        std::cout << "    Foil Vertex (X, Y, Z): "
+                  << foilPos.X() << ", "
+                  << foilPos.Y() << ", "
+                  << foilPos.Z() << "\n";
+    }
+
+    if (p.has_calo_vertex())
+    {
+        TVector3 caloPos = p.get_calo_vertex_position();
+        std::cout << "    Calo Vertex (X, Y, Z): "
+                  << caloPos.X() << ", "
+                  << caloPos.Y() << ", "
+                  << caloPos.Z() << "\n";
+    }
+}
+
+//*************************************************************************************************
+
 
         eventNo++;
         return falaise::processing::status::PROCESS_SUCCESS;
     }
     else if (!eventFilter->event_passed_filters(event))
     {
-        // std::cout << "Event: " << eventNo << " Failed! "  <<std::endl;
+         std::cout << "Event: " << eventNo << " Failed! "  <<std::endl;
         eventNo++;
         return dpp::base_module::PROCESS_STOP;
     }

@@ -72,19 +72,12 @@ class Filters: public TObject
 	void set_calib_source_Y(const std::vector<std::vector<double>>& Y);
 	void set_calib_source_Z(const std::vector<std::vector<double>>& Z);
 	
-//*********************************************************************************	
-
-
 //****************************************************************
 
 bool event_has_vertex_close_to_calib_source(Event& _event);
 void set_useEventHasVertexCloseToCalibSource(bool value);
 
 //********************************************************************************************************
-
-
-
-
 
     private:
         // std::vector<FilterFunction> filters;
