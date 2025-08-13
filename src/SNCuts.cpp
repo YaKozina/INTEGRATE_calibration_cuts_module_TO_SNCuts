@@ -439,6 +439,15 @@ eventFilter->set_calib_source_Z(calib_source_Z_);
     std::cout << "    Calib Source Vertex (X, Y, Z): "
               << c.X() << ", " << c.Y() << ", " << c.Z() << "\n";
 }
+
+if (p.has_calibration_source_vertex()) {
+  auto v = p.get_calibration_source_vertex_position();
+  std::cout << "    Vertex on calibration source (X, Y, Z): "
+            << v.X() << ", " << v.Y() << ", " << v.Z() << "\n";
+}
+
+
+
 }
 
 //*************************************************************************************************
@@ -511,8 +520,7 @@ Event SNCuts::get_event_data(datatools::things &workItem)
             {
                 const std::vector<datatools::handle<snemo::datamodel::vertex>> &particle_vertices = track.get_vertices();
 
-                for (
-                    datatools::handle<vertex> iVertex : particle_vertices)
+                for (datatools::handle<vertex> iVertex : particle_vertices)
                 {
                     snemo::datamodel::vertex vtx = iVertex.get(); // get the vertex
 
@@ -561,6 +569,18 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                     vtx.get_spot().get_position().z());
             }
         }
+        
+        
+else if (vtx.is_on_calibration_source()) {
+  const auto &p = vtx.get_spot().get_position(); //"Vertex on calibration source"
+  ptdparticle->set_calibration_source_vertex_position(p.x(), p.y(), p.z());
+}
+       
+        
+        
+        
+        
+        
 //************************************************************************   
                     
                     

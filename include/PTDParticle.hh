@@ -34,6 +34,11 @@ class PTDParticle: public TObject
 //*********************************************************************************
 		void    set_calib_vertex_position(double _X, double _Y, double _Z);
 		bool    has_calib_vertex();
+		
+		void    set_calibration_source_vertex_position(double x, double y, double z);
+		bool    has_calibration_source_vertex() const;
+		TVector3 get_calibration_source_vertex_position() const;
+		
 //*********************************************************************************
         int     	get_charge();
         int 		get_associated_calo_hits_number();    					// get the number of calo hits per PTD entry (this may not be 1)
@@ -69,6 +74,10 @@ class PTDParticle: public TObject
 //****************************************************	
 		bool hasCalibVertex = false;
 		TVector3 calibVertexPosition;
+		
+		
+		bool     hasCalibrationSourceVertex_ = false;
+		TVector3 calibrationSourceVertex_;
 //****************************************************	
     
     

@@ -92,6 +92,12 @@ void PTDParticle::set_calib_vertex_position(double _X, double _Y, double _Z)
 	calibVertexPosition.SetXYZ(_X, _Y, _Z);
 }
 
+
+void PTDParticle::set_calibration_source_vertex_position(double x,double y,double z){
+  hasCalibrationSourceVertex_ = true;
+  calibrationSourceVertex_.SetXYZ(x,y,z);
+}
+
 //******************************************************************
 
 
@@ -109,6 +115,11 @@ bool 	    PTDParticle::has_foil_vertex()
 bool PTDParticle::has_calib_vertex()
 {
     return hasCalibVertex;
+}
+
+bool PTDParticle::has_calibration_source_vertex() const 
+{ return hasCalibrationSourceVertex_; 
+
 }
 //********************************************************************
 bool 	PTDParticle::has_calo_vertex()
@@ -135,6 +146,11 @@ TVector3    PTDParticle::get_foil_vertex_position()
 TVector3 PTDParticle::get_calib_vertex_position()
 {
     return calibVertexPosition;
+}
+
+
+TVector3 PTDParticle::get_calibration_source_vertex_position() const 
+{ return calibrationSourceVertex_; 
 }
 //*********************************************************
 TVector3    PTDParticle::get_calo_vertex_position()
