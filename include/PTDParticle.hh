@@ -7,6 +7,7 @@
 
 // Standard headers
 #include "iostream"
+#include <algorithm>
 
 using namespace std;
 
@@ -29,19 +30,31 @@ class PTDParticle: public TObject
 		void    set_time_sigma(double _timeSigma);
 		void    set_foil_vertex_position(double _X, double _Y, double _Z);
 		void    set_calo_vertex_position(double _X, double _Y, double _Z);
-		bool 	has_foil_vertex();
-		bool 	has_calo_vertex();
+
+//new
 //*********************************************************************************
 		void    set_calib_vertex_position(double _X, double _Y, double _Z);
-		bool    has_calib_vertex();
-		
 		void    set_calibration_source_vertex_position(double x, double y, double z);
-		bool    has_calibration_source_vertex() const;
-		TVector3 get_calibration_source_vertex_position() const;
 		
+		void set_kink_info_from_trajectory(int trajectoryKinkCount);
+		void set_has_kink_in_trajectory(bool hasKink);
+
+//*********************************************************************************				
+		bool 	has_foil_vertex();
+		bool 	has_calo_vertex();
+//new
 //*********************************************************************************
+		bool    has_calib_vertex();
+		bool    has_calibration_source_vertex() const;
+		bool has_kink_in_trajectory();
+
+//*********************************************************************************
+
         int     	get_charge();
         int 		get_associated_calo_hits_number();    					// get the number of calo hits per PTD entry (this may not be 1)
+//*********************************************************************************        
+	int  get_kink_count_in_trajectory();
+//*********************************************************************************
         double 		get_energy();
         double 		get_energy_MeV();
         double 		get_energy_sigma_MeV();
@@ -53,6 +66,7 @@ class PTDParticle: public TObject
 		TVector3    get_calo_vertex_position();
 //****************************************************
 		TVector3 get_calib_vertex_position();
+		TVector3 get_calibration_source_vertex_position() const;
 //****************************************************
 
 
@@ -60,6 +74,10 @@ class PTDParticle: public TObject
 	private:
 		int     charge;
 		int 	associatedCaloHitsNo = 0;
+//****************************************************		
+		int  kinkCountInTrajectory = 0;
+
+//****************************************************
 		double  energy = -1.0;
 		double  energySigma = -1.0;
 		double  trackLength = -1.0;
@@ -68,15 +86,15 @@ class PTDParticle: public TObject
 
 		bool hasFoilVertex = false;
 		bool hasCaloVertex = false;
-
+//****************************************************
+		bool hasCalibVertex = false;
+		bool     hasCalibrationSourceVertex_ = false;
+		bool hasKinkInTrajectory = false;		
+//****************************************************
 		TVector3 foilVertexPosition;
 		TVector3 caloVertexPosition;
-//****************************************************	
-		bool hasCalibVertex = false;
+//****************************************************
 		TVector3 calibVertexPosition;
-		
-		
-		bool     hasCalibrationSourceVertex_ = false;
 		TVector3 calibrationSourceVertex_;
 //****************************************************	
     

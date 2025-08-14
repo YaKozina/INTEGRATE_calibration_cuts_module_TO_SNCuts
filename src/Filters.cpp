@@ -91,6 +91,12 @@ Filters::Filters(std::vector<std::string>& _filtersToBeUsed)
         {
             useEventHasNEscapedParticles = true;
         }
+//*****************************************************************        
+        if (filter == "isThereKinkTrack") 
+        {
+    useEventRejectIfKinkTracks_ = true;
+	}
+//****************************************************************        
     }
 }
 
@@ -418,6 +424,24 @@ bool Filters::event_has_vertex_close_to_calib_source(Event& _event)
 
 //******************************************************************************************************
 
+bool Filters::event_has_kink_tracks(Event& _event)
+{
+    for (auto& particle : _event.get_particles()) 
+    {
+        if (particle.has_kink_in_trajectory())
+        {
+         return true;
+         }
+    }
+    return false;
+}
+
+
+
+
+
+
+
 bool Filters::event_has_Pint_above    (Event& _event, double _minPint)
 {
     if ( _event.get_particles().size() != 2.0 )
@@ -630,11 +654,20 @@ bool Filters::event_passed_filters(Event& _event) {
     }
     
     
-    //new     
+//new     
 //*********************************************************    
-    if (useEventHasVertexCloseToCalibSource && !event_has_vertex_close_to_calib_source(_event)) {
+    if (useEventHasVertexCloseToCalibSource && !event_has_vertex_close_to_calib_source(_event)) 
+    {
     return false;
-    } 
+    }    
+//*********************************************************
+
+//new     
+//*********************************************************    
+    if (useEventRejectIfKinkTracks_ && event_has_kink_tracks(_event)) 
+    {
+    return false; 
+    }
 //*********************************************************
     
     return true;

@@ -81,7 +81,15 @@ class Filters: public TObject
 bool event_has_vertex_close_to_calib_source(Event& _event);
 void set_useEventHasVertexCloseToCalibSource(bool value);
 
+
+  bool event_has_kink_tracks(Event& _event);
 //********************************************************************************************************
+
+
+void set_useEventRejectIfKinkTracks(bool use) { useEventRejectIfKinkTracks_ = use; }
+
+
+
 
     private:
         // std::vector<FilterFunction> filters;
@@ -118,11 +126,20 @@ void set_useEventHasVertexCloseToCalibSource(bool value);
         bool useEventHasNEscapedParticles = false;
         int nEscapedParticles;
 
-//new 
+//new for filter "vertex close to calibration source" (1/4 filters)
 //*********************************************************************************************************
 //1 event has at least 1 track which has vertes close to the calobration source 
  bool useEventHasVertexCloseToCalibSource = false;
 //****************************************************************
+
+
+//new for filter "kinked tracks inspection" (2/4)                
+//*********************************************************************************************************
+//1 event has at least 1 kinked track to be declined 
+bool useEventRejectIfKinkTracks_ = false;
+//****************************************************************
+
+
 
 double source_cut_ellipse_Y_ = 25.0;
 double source_cut_ellipse_Z_ = 30.0;

@@ -124,12 +124,18 @@ private:
 //***************************************************************
     bool use_calibration_source_cut_ = false;
     bool _useEventHasVertexCloseToCalibSource_ = false;
-    
-//************
+//***************************************************************
+
+//new
+//***************************************************************
+	bool _useEventRejectIfKinkTracks_ = false;
+//***************************************************************
+
+
     double _source_cut_ellipse_Y_ = 25.0;
     double _source_cut_ellipse_Z_ = 30.0;
     
-    
+//***************************************************************    
 std::vector<std::vector<double>> calib_source_Y_;
 std::vector<std::vector<double>> calib_source_Z_;
 
