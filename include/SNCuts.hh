@@ -128,9 +128,14 @@ private:
 
 //new
 //***************************************************************
-	bool _useEventRejectIfKinkTracks_ = false;
+	bool _useEventRejectIfKinkTracks_ = false;	
 //***************************************************************
 
+//new
+//***************************************************************
+	bool _useEventHasNumberOfKinks_ = false; 
+
+//***************************************************************
 
     double _source_cut_ellipse_Y_ = 25.0;
     double _source_cut_ellipse_Z_ = 30.0;
@@ -139,12 +144,14 @@ private:
 std::vector<std::vector<double>> calib_source_Y_;
 std::vector<std::vector<double>> calib_source_Z_;
 
-
 int calib_source_rows_ = 7;
 int calib_source_columns_ = 6;
+//***************************************************************
 
-//************
-
+//new
+//***************************************************************
+std::vector<int> _kinkMultiplicityPattern_;
+//***************************************************************
 snemo::service_handle<snemo::geometry_svc> geo_manager_;
 
 //************************************************************

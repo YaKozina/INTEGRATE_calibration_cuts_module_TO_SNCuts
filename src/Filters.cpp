@@ -96,7 +96,12 @@ Filters::Filters(std::vector<std::string>& _filtersToBeUsed)
         {
     useEventRejectIfKinkTracks_ = true;
 	}
-//****************************************************************        
+//****************************************************************    
+	if (filter == "hasNumberofKinks") 
+	{
+    useEventHasNumberOfKinks_ = true;
+	}
+//****************************************************************
     }
 }
 
@@ -366,8 +371,6 @@ void Filters::set_source_cut_ellipse_Y(double _cut_ellipse_Y) {
 void Filters::set_source_cut_ellipse_Z(double _cut_ellipse_Z) {
     source_cut_ellipse_Z_ = _cut_ellipse_Z;
 }
-
-
 //*******************************************************************************************
 
 bool Filters::event_has_foil_vertex_distance_below(Event& _event, double _maxFoilVertexDistance) // is it better if vertex distance is calculated here, or is part of Event?
@@ -435,9 +438,44 @@ bool Filters::event_has_kink_tracks(Event& _event)
     }
     return false;
 }
+//******************************************************************************************************
+bool Filters::event_has_number_of_kinks(Event& _event)
+{
+  if (kinkMultiplicityPattern_.empty()) return false;
 
+  std::vector<int> counts(kinkMultiplicityPattern_.size(), 0);
+  int extraHigher = 0;
 
+    for (auto& particle : _event.get_particles()) {
 
+    if (particle.get_track_length() < 0) continue;
+
+    int kinkCount = particle.get_kink_count_in_trajectory();
+    if (kinkCount < 0) kinkCount = 0; 
+
+    if (kinkCount < static_cast<int>(counts.size())) {
+      counts[kinkCount]++;
+    } else {
+
+      extraHigher++;
+    }
+  }
+
+  for (size_t i = 0; i < counts.size(); ++i) 
+  {
+    if (counts[i] != kinkMultiplicityPattern_[i]) 
+    {
+    return false;
+    }
+  }
+  if (extraHigher > 0) 
+  {
+  return false;
+  }
+  return true;
+}
+
+//******************************************************************************************************
 
 
 
@@ -667,6 +705,17 @@ bool Filters::event_passed_filters(Event& _event) {
     if (useEventRejectIfKinkTracks_ && event_has_kink_tracks(_event)) 
     {
     return false; 
+    }
+//*********************************************************
+
+//new     
+//*********************************************************    
+    if (useEventHasNumberOfKinks_) 
+    {
+         if (!event_has_number_of_kinks(_event)) 
+         {
+         return false;
+         }
     }
 //*********************************************************
     

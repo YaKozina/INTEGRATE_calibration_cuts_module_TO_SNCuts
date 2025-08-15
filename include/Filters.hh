@@ -68,7 +68,7 @@ class Filters: public TObject
         bool event_passed_filters                   (Event& _event);
 
 
-
+//new
 //*********************************************************************************
 	void set_source_cut_ellipse_Y(double _cut_ellipse_Y);
 	void set_source_cut_ellipse_Z(double _cut_ellipse_Z);
@@ -76,17 +76,35 @@ class Filters: public TObject
 	void set_calib_source_Y(const std::vector<std::vector<double>>& Y);
 	void set_calib_source_Z(const std::vector<std::vector<double>>& Z);
 	
-//****************************************************************
+//*******************************************************************************************************
 
 bool event_has_vertex_close_to_calib_source(Event& _event);
 void set_useEventHasVertexCloseToCalibSource(bool value);
 
+//********************************************************************************************************
+bool event_has_kink_tracks(Event& _event);
 
-  bool event_has_kink_tracks(Event& _event);
+void set_useEventRejectIfKinkTracks(bool use) 
+{ 
+useEventRejectIfKinkTracks_ = use; 
+}
 //********************************************************************************************************
 
+//new 
+//********************************************************************************************************
+bool event_has_number_of_kinks(Event& _event);
 
-void set_useEventRejectIfKinkTracks(bool use) { useEventRejectIfKinkTracks_ = use; }
+
+ void set_useEventHasNumberOfKinks(bool value) 
+ { 
+ useEventHasNumberOfKinks_ = value; 
+ }
+ void set_kink_multiplicity_pattern(const std::vector<int> & pattern) 
+ { 
+ kinkMultiplicityPattern_ = pattern; 
+ }
+
+//********************************************************************************************************
 
 
 
@@ -139,8 +157,14 @@ void set_useEventRejectIfKinkTracks(bool use) { useEventRejectIfKinkTracks_ = us
 bool useEventRejectIfKinkTracks_ = false;
 //****************************************************************
 
+//new for filter "number of kinked tracks" (additional)                
+//*********************************************************************************************************
+bool useEventHasNumberOfKinks_ = false;        
+std::vector<int> kinkMultiplicityPattern_;    
+//*********************************************************************************************************
 
 
+//calib source parameters for the filter "vertex close to calibration source" (1/4 filters)
 double source_cut_ellipse_Y_ = 25.0;
 double source_cut_ellipse_Z_ = 30.0;
 

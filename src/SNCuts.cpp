@@ -17,6 +17,8 @@
 // ROOT
 #include "TMath.h"  
 
+#include <sstream>
+
 //***********************************************************
 
 #include "SNCuts.hh"
@@ -56,9 +58,29 @@ void SNCuts::initialize(
 
     if (myConfig.has_key("source_pos_path")) {
       source_pos_path_ = myConfig.fetch_string("source_pos_path");
-    } else {
+    } else 
+    {
       source_pos_path_ = "";
     }
+    
+//new 
+//***************************************************************************************************
+    if (myConfig.has_key("hasNumberofKinks")) {
+      std::string kinkSpec = myConfig.fetch_string("hasNumberofKinks");
+      std::istringstream iss(kinkSpec);
+      int multiplicity = 0;
+      _kinkMultiplicityPattern_.clear();
+  	while (iss >> multiplicity) {
+    		_kinkMultiplicityPattern_.push_back(multiplicity);
+  }
+
+     if (!_kinkMultiplicityPattern_.empty()) {
+    	_useEventHasNumberOfKinks_ = true;
+    	_filtersToBeUsed.push_back("hasNumberofKinks");
+  	}
+}
+//***************************************************************************************************
+
 
     if (source_pos_path_.empty()) {
 
@@ -343,16 +365,30 @@ void SNCuts::initialize(
     {
     }
 
-    // new filter "isThereKinkTrack"
+    // new filter "isThereKinkTrack" (semi additional - added for the kink study but is also transfered from calbrationcuts)
     try {
         myConfig.fetch("isThereKinkTrack", this->_useEventRejectIfKinkTracks_);
         if (_useEventRejectIfKinkTracks_) {
             _filtersToBeUsed.push_back("isThereKinkTrack");
+                                          }
         }
-    }
     catch (std::logic_error &)
     {
     }
+    //****************************************************************************************************    
+       // new filter "hasNumberofKinks" (additional - added for the kink study)
+    try {
+  	myConfig.fetch("hasNumberofKinks", this->_useEventHasNumberOfKinks_);
+  	if (_useEventHasNumberOfKinks_) {
+    	    _filtersToBeUsed.push_back("hasNumberofKinks");
+    				    }
+        } 
+    catch (std::logic_error &) 
+    {
+    }
+  //****************************************************************************************************  
+    
+    
 } 
 
 dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
@@ -375,6 +411,11 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
     eventFilter->set_min_Pint(_minPint_);
     eventFilter->set_max_Pext(_maxPext_);
     eventFilter->set_n_escaped_particles(_nEscapedParticles_);
+    // new setters for filter "hasNumberofKinks"
+    eventFilter->set_useEventHasNumberOfKinks(_useEventHasNumberOfKinks_);
+    eventFilter->set_kink_multiplicity_pattern(_kinkMultiplicityPattern_);
+
+
 
     //// Main method that fills event data from CD, PTD, etc.
     event = get_event_data(workItem);
