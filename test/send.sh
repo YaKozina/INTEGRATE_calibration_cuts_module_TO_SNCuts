@@ -18,5 +18,5 @@ WORKDIR=/sps/nemo/scratch/ykozina/Falaise/tutorial/kink-track-study---Anna/0nu
 
 #$FALAISE_BIN/flreconstruct -i $WORKDIR/simu_cut1_test.brio -p reco.conf -o $WORKDIR/reco_cut1_test_kink_track_truefalse_cut_1.brio
 
-$FALAISE_BIN/flreconstruct -i $WORKDIR/simu_3cuts_test_1.brio -p reco.conf -o $WORKDIR/reco_3cuts_test_1.brio
+$FALAISE_BIN/flreconstruct -i $WORKDIR/simu_3cuts_test_1.brio -p reco.conf -o $WORKDIR/reco_numberofkinks_test_7.brio
 
