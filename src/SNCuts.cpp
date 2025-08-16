@@ -387,8 +387,38 @@ void SNCuts::initialize(
     {
     }
   //****************************************************************************************************  
+   
+  //****************************************************************************************************    
+  // new filter "useEventTrackHasOneAssocCaloHit" 
+   try {
+  	myConfig.fetch("useEventTrackHasOneAssocCaloHit", this->_useEventTrackHasOneAssocCaloHit_);
+  	if (_useEventTrackHasOneAssocCaloHit_) 
+  	{
+    	_filtersToBeUsed.push_back("useEventTrackHasOneAssocCaloHit");
+        }
+	} 
+    catch (std::logic_error &) 
+    {
+    }
+
+  //****************************************************************************************************
     
-    
+  //****************************************************************************************************    
+  // new filter "useEventTrackHasCaloChargeAbove" 
+
+   try {
+        myConfig.fetch("useEventTrackHasCaloChargeAbove", this->_useEventTrackHasCaloChargeAbove_);
+        if (_useEventTrackHasCaloChargeAbove_) 
+        {
+          _filtersToBeUsed.push_back("useEventTrackHasCaloChargeAbove");
+        }
+        myConfig.fetch("caloChargeMin_nVs", this->_caloChargeMin_nVs_);
+      } 
+      catch (std::logic_error &) 
+      {
+      }
+
+  //****************************************************************************************************    
 } 
 
 dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
@@ -414,8 +444,11 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
     // new setters for filter "hasNumberofKinks"
     eventFilter->set_useEventHasNumberOfKinks(_useEventHasNumberOfKinks_);
     eventFilter->set_kink_multiplicity_pattern(_kinkMultiplicityPattern_);
-
-
+    // new setters for filter "useEventTrackHasOneAssocCaloHit"
+    eventFilter->set_useEventTrackHasOneAssocCaloHit(_useEventTrackHasOneAssocCaloHit_);
+    // new setters for filter "useEventTrackHasCaloChargeAbove"
+    eventFilter->set_useEventTrackHasCaloChargeAbove(_useEventTrackHasCaloChargeAbove_);
+    eventFilter->set_calo_charge_min_nVs(_caloChargeMin_nVs_);
 
     //// Main method that fills event data from CD, PTD, etc.
     event = get_event_data(workItem);
@@ -497,6 +530,15 @@ Event SNCuts::get_event_data(datatools::things &workItem)
     event.set_event_number(eventNo);
 
     double totEne = 0.0;
+    
+//*******************************************************************************************
+bool has_pCD = workItem.has("pCD");
+snemo::datamodel::precalibrated_data pCDbank;
+	if (has_pCD) 
+	{
+		pCDbank = workItem.get<snemo::datamodel::precalibrated_data>("pCD");
+	}
+//*******************************************************************************************    
 
     if (workItem.has("PTD"))
     {
@@ -546,16 +588,36 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                             vtx.get_spot().get_position().y(),
                             vtx.get_spot().get_position().z());
                     }
-                    else if (
+                    
+//********************************************************************************************                    
+                   /* else if (
                         vtx.is_on_main_calorimeter() ||
                         vtx.is_on_x_calorimeter() ||
-                        vtx.is_on_gamma_veto())
-                    {
+                        vtx.is_on_gamma_veto()) 
+                     {
                         ptdparticle->set_calo_vertex_position(
-                            vtx.get_spot().get_position().x(),
-                            vtx.get_spot().get_position().y(),
-                            vtx.get_spot().get_position().z());
+                        vtx.get_spot().get_position().x(),
+                        vtx.get_spot().get_position().y(),
+                        vtx.get_spot().get_position().z());
+                     }                 
+                    */
+                        
+		    else if (vtx.is_on_main_calorimeter() || vtx.is_on_x_calorimeter())
+		    {
+                       ptdparticle->set_calo_vertex_position(
+                       vtx.get_spot().get_position().x(),
+                       vtx.get_spot().get_position().y(),
+                       vtx.get_spot().get_position().z());
+                       ptdparticle->set_has_main_or_x_calo_vertex(true);
                     }
+		    else if (vtx.is_on_gamma_veto())
+		    {
+                       ptdparticle->set_calo_vertex_position(
+                       vtx.get_spot().get_position().x(),
+                       vtx.get_spot().get_position().y(),
+                       vtx.get_spot().get_position().z());
+                    }
+//********************************************************************************************
                     else if (vtx.is_on_reference_source_plane())
                     {
                         double ver_y = vtx.get_spot().get_position().y();
@@ -594,8 +656,11 @@ Event SNCuts::get_event_data(datatools::things &workItem)
             {
                 int assCaloHitNo = 0;
 
-                const std::vector<datatools::handle<snemo::datamodel::calibrated_calorimeter_hit>> &assCaloHits = track.get_associated_calorimeter_hits();
-                for (datatools::handle<snemo::datamodel::calibrated_calorimeter_hit> iCaloHit : track.get_associated_calorimeter_hits())
+                //const std::vector<datatools::handle<snemo::datamodel::calibrated_calorimeter_hit>> &assCaloHits = track.get_associated_calorimeter_hits();
+                //for (datatools::handle<snemo::datamodel::calibrated_calorimeter_hit> iCaloHit : track.get_associated_calorimeter_hits())
+                
+		const auto &assCaloHits = track.get_associated_calorimeter_hits();
+        	for (const auto &iCaloHit : assCaloHits)                
                 {
                     snemo::datamodel::calibrated_calorimeter_hit cch = iCaloHit.get();
 
@@ -605,6 +670,22 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                     ptdparticle->set_time_sigma(cch.get_sigma_time() / CLHEP::ns);          // calohit time sigma in ns
 
                     totEne += cch.get_energy() / CLHEP::keV;
+                    
+//*********************************************************************************************         
+          if (has_pCD) {
+            const auto calo_gid = cch.get_geom_id();
+            double q_nVs = -1.0;
+            for (const auto &h : pCDbank.calorimeter_hits()) {
+              if (h->get_geom_id() == calo_gid) {
+                q_nVs = - h->get_charge() * 1e6;  
+                break;
+              }
+            }
+            ptdparticle->set_calo_charge_nVs(q_nVs);
+          }
+//*********************************************************************************************           
+                    
+                    
                     assCaloHitNo++;
                 }
 

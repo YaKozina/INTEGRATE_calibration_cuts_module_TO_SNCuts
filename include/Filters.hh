@@ -94,8 +94,7 @@ useEventRejectIfKinkTracks_ = use;
 //********************************************************************************************************
 bool event_has_number_of_kinks(Event& _event);
 
-
- void set_useEventHasNumberOfKinks(bool value) 
+void set_useEventHasNumberOfKinks(bool value) 
  { 
  useEventHasNumberOfKinks_ = value; 
  }
@@ -106,9 +105,18 @@ bool event_has_number_of_kinks(Event& _event);
 
 //********************************************************************************************************
 
+//new 
+//********************************************************************************************************
+bool event_track_has_one_assoc_calo_hit(Event& _event);
+void set_useEventTrackHasOneAssocCaloHit(bool value);
+//********************************************************************************************************
 
-
-
+//new 
+//********************************************************************************************************
+  bool  event_track_has_calo_charge_above(Event& _event);
+  void  set_useEventTrackHasCaloChargeAbove(bool value);
+  void  set_calo_charge_min_nVs(double value);
+//********************************************************************************************************
     private:
         // std::vector<FilterFunction> filters;
 
@@ -163,6 +171,17 @@ bool useEventHasNumberOfKinks_ = false;
 std::vector<int> kinkMultiplicityPattern_;    
 //*********************************************************************************************************
 
+
+//new for filter "1 track has 1 associated calo hit"        
+//*********************************************************************************************************
+bool useEventTrackHasOneAssocCaloHit_ = false;
+//*********************************************************************************************************
+
+//new for filter "EventTrackHasCaloChargeAbove"        
+//*********************************************************************************************************
+  bool   useEventTrackHasCaloChargeAbove_ = false;
+  double caloChargeMin_nVs_               = -1.0;
+//*********************************************************************************************************
 
 //calib source parameters for the filter "vertex close to calibration source" (1/4 filters)
 double source_cut_ellipse_Y_ = 25.0;

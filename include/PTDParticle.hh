@@ -38,7 +38,10 @@ class PTDParticle: public TObject
 		
 		void set_kink_info_from_trajectory(int trajectoryKinkCount);
 		void set_has_kink_in_trajectory(bool hasKink);
-
+             
+                void set_has_main_or_x_calo_vertex(bool value);
+                
+                void    set_calo_charge_nVs(double q);
 //*********************************************************************************				
 		bool 	has_foil_vertex();
 		bool 	has_calo_vertex();
@@ -46,8 +49,10 @@ class PTDParticle: public TObject
 //*********************************************************************************
 		bool    has_calib_vertex();
 		bool    has_calibration_source_vertex() const;
-		bool has_kink_in_trajectory();
-
+		bool    has_kink_in_trajectory();
+		
+                bool has_main_or_x_calo_vertex() const;
+                
 //*********************************************************************************
 
         int     	get_charge();
@@ -62,6 +67,10 @@ class PTDParticle: public TObject
 		double 		get_time();
 		double 		get_time_sigma();
 		
+//****************************************************
+		double  get_calo_charge_nVs();
+//****************************************************
+		
 		TVector3    get_foil_vertex_position();
 		TVector3    get_calo_vertex_position();
 //****************************************************
@@ -69,7 +78,10 @@ class PTDParticle: public TObject
 		TVector3 get_calibration_source_vertex_position() const;
 //****************************************************
 
+//new
+//****************************************************
 
+//****************************************************
 
 	private:
 		int     charge;
@@ -84,12 +96,16 @@ class PTDParticle: public TObject
 		double  time = -1.0;
 		double  timeSigma = -1.0;
 
+		double  caloCharge_nVs = -1.0;
+
 		bool hasFoilVertex = false;
 		bool hasCaloVertex = false;
 //****************************************************
 		bool hasCalibVertex = false;
-		bool     hasCalibrationSourceVertex_ = false;
-		bool hasKinkInTrajectory = false;		
+		bool hasCalibrationSourceVertex_ = false;
+		bool hasKinkInTrajectory = false;
+			
+		bool hasMainOrXCalVertex = false;
 //****************************************************
 		TVector3 foilVertexPosition;
 		TVector3 caloVertexPosition;

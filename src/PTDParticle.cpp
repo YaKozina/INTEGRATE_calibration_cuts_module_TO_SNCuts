@@ -162,6 +162,37 @@ bool PTDParticle::has_kink_in_trajectory()
 //********************************************************************
 //end of
 
+//new
+//******************************************************************
+void PTDParticle::set_has_main_or_x_calo_vertex(bool value)
+{
+    hasMainOrXCalVertex = value;
+}
+
+bool PTDParticle::has_main_or_x_calo_vertex() const
+{
+    return hasMainOrXCalVertex;
+}
+//********************************************************************
+//end of
+
+//new
+//******************************************************************
+void PTDParticle::set_calo_charge_nVs(double q) 
+{ 
+caloCharge_nVs = q; 
+}
+
+double PTDParticle::get_calo_charge_nVs()
+{ 
+return caloCharge_nVs; 
+}
+//********************************************************************
+//end of
+
+
+
+
 bool 	PTDParticle::has_calo_vertex()
 {
     return hasCaloVertex;

@@ -94,13 +94,24 @@ Filters::Filters(std::vector<std::string>& _filtersToBeUsed)
 //*****************************************************************        
         if (filter == "isThereKinkTrack") 
         {
-    useEventRejectIfKinkTracks_ = true;
+    	    useEventRejectIfKinkTracks_ = true;
 	}
 //****************************************************************    
 	if (filter == "hasNumberofKinks") 
 	{
-    useEventHasNumberOfKinks_ = true;
+    	    useEventHasNumberOfKinks_ = true;
 	}
+//****************************************************************
+	if (filter == "useEventTrackHasOneAssocCaloHit")
+	{
+    	    useEventTrackHasOneAssocCaloHit_ = true;
+	}
+//****************************************************************
+	if (filter == "useEventTrackHasCaloChargeAbove") 
+	{
+	    useEventTrackHasCaloChargeAbove_ = true;
+	}
+
 //****************************************************************
     }
 }
@@ -322,7 +333,7 @@ bool Filters::event_has_associated_calo_hits(Event& _event)
         {
             return true;
         }
-        return true;
+        return (_event.get_cd_bank().get_number_of_calo_hits() > 0);
     }
     else
     {
@@ -363,7 +374,6 @@ void Filters::set_useEventHasVertexCloseToCalibSource(bool _useEventHasVertexClo
     useEventHasVertexCloseToCalibSource = _useEventHasVertexCloseToCalibSource;
 }
 
-
 void Filters::set_source_cut_ellipse_Y(double _cut_ellipse_Y) {
     source_cut_ellipse_Y_ = _cut_ellipse_Y;
 }
@@ -373,6 +383,24 @@ void Filters::set_source_cut_ellipse_Z(double _cut_ellipse_Z) {
 }
 //*******************************************************************************************
 
+void Filters::set_useEventTrackHasOneAssocCaloHit(bool value)
+{
+    useEventTrackHasOneAssocCaloHit_ = value;
+}
+
+//*******************************************************************************************
+void Filters::set_useEventTrackHasCaloChargeAbove(bool value) 
+{ 
+useEventTrackHasCaloChargeAbove_ = value; 
+}
+
+void Filters::set_calo_charge_min_nVs(double v)
+{ 
+caloChargeMin_nVs_ = v; 
+}
+
+
+//*******************************************************************************************
 bool Filters::event_has_foil_vertex_distance_below(Event& _event, double _maxFoilVertexDistance) // is it better if vertex distance is calculated here, or is part of Event?
 {
     double foilVertexDistance = 1000000.0;
@@ -441,7 +469,10 @@ bool Filters::event_has_kink_tracks(Event& _event)
 //******************************************************************************************************
 bool Filters::event_has_number_of_kinks(Event& _event)
 {
-  if (kinkMultiplicityPattern_.empty()) return false;
+  if (kinkMultiplicityPattern_.empty())
+  { 
+  return false;
+  }
 
   std::vector<int> counts(kinkMultiplicityPattern_.size(), 0);
   int extraHigher = 0;
@@ -477,9 +508,32 @@ bool Filters::event_has_number_of_kinks(Event& _event)
 
 //******************************************************************************************************
 
+bool Filters::event_track_has_one_assoc_calo_hit(Event& _event)
+{
+    for (auto& particle : _event.get_particles()) 
+    {
+        if (particle.get_associated_calo_hits_number() == 1 && particle.has_main_or_x_calo_vertex())
+        {
+            return true; 
+        }
+    }
+    return false;
+}
+//******************************************************************************************************
 
+bool Filters::event_track_has_calo_charge_above(Event& _event)
+{
+    for (auto& particle : _event.get_particles()) 
+      {
+    if (particle.get_associated_calo_hits_number() == 1 && particle.has_main_or_x_calo_vertex())
+    {
+      if (particle.get_calo_charge_nVs() >= caloChargeMin_nVs_) return true;
+    }
+  }
+  return false;
+}
 
-
+//******************************************************************************************************
 bool Filters::event_has_Pint_above    (Event& _event, double _minPint)
 {
     if ( _event.get_particles().size() != 2.0 )
@@ -718,7 +772,16 @@ bool Filters::event_passed_filters(Event& _event) {
          }
     }
 //*********************************************************
-    
+    if (useEventTrackHasOneAssocCaloHit_ && !event_track_has_one_assoc_calo_hit(_event))
+    {
+    return false;
+    }
+//*********************************************************
+    if (useEventTrackHasCaloChargeAbove_ && !event_track_has_calo_charge_above(_event))   
+    {
+    return false;
+    }
+//*********************************************************    
     return true;
 }
 
