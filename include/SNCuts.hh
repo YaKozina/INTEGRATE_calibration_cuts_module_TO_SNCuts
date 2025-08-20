@@ -128,23 +128,34 @@ private:
 
 //new
 //***************************************************************
-	bool _useEventRejectIfKinkTracks_ = false;	
+    bool _useEventRejectIfKinkTracks_ = false;	
 //***************************************************************
 
 //new
 //***************************************************************
-	bool _useEventHasNumberOfKinks_ = false; 
+    bool _useEventHasNumberOfKinks_ = false; 
 //***************************************************************
 
 //new
 //***************************************************************
-	bool _useEventTrackHasOneAssocCaloHit_ = false;
+    bool _useEventTrackHasOneAssocCaloHit_ = false;
 //***************************************************************
 
 //new
 //***************************************************************
-	bool   _useEventTrackHasCaloChargeAbove_ = false;
+    bool   _useEventTrackHasCaloChargeAbove_ = false;
 //***************************************************************
+
+//new
+//***************************************************************
+// --- geometry: Bi source carrier (optional, if present in geometry) ---
+    bool   _has_Bi_source_ = false;
+    double _Bi_source_x_   = 0.0;
+    double _Bi_source_y_   = 0.0;
+    double _Bi_source_z_   = 0.0;
+
+//***************************************************************
+
 
     double _source_cut_ellipse_Y_ = 25.0;
     double _source_cut_ellipse_Z_ = 30.0;

@@ -7,6 +7,7 @@
 #include <falaise/snemo/datamodels/tracker_trajectory_data.h>
 #include <falaise/snemo/datamodels/geomid_utils.h>
 #include <falaise/snemo/datamodels/vertex_utils.h>
+#include <bayeux/geomtools/box.h>
 
 // Bayeux
 #include <geomtools/geometry_service.h>
@@ -15,9 +16,13 @@
 #include <falaise/snemo/services/geometry.h>
 
 // ROOT
-#include "TMath.h"  
-
+#include "TMath.h" 
+ 
+#include <cmath>
 #include <sstream>
+#include <stdexcept>
+#include <fstream>
+#include <iostream>
 
 //***********************************************************
 
@@ -80,50 +85,91 @@ void SNCuts::initialize(
   	}
 }
 //***************************************************************************************************
+if (source_pos_path_.empty()) {
 
+  std::cout << "[SNCuts]Falaise geometry service" << std::endl;
 
-    if (source_pos_path_.empty()) {
+  const geomtools::id_mgr    & mgr     = geo_manager_->get_id_mgr();
+  const geomtools::mapping   & mapping = geo_manager_->get_mapping();
 
-        std::cout << "[SNCuts]Falaise geometry service" << std::endl;
+  const geomtools::mapping & geoMapping = mapping;
+  const geomtools::id_mgr  & geoIdMgr   = mgr;
 
-      const geomtools::id_mgr & mgr = geo_manager_->get_id_mgr();
-      const geomtools::mapping & mapping = geo_manager_->get_mapping();
+  _has_Bi_source_ = false;
+  std::vector<geomtools::geom_id> sourceCalibrationCarrierGids;
+  uint32_t sourceCalibrationCarrierType = geomtools::geom_id::INVALID_TYPE;
 
-      for (int i = 0; i < calib_source_rows_; ++i) {
-        for (int j = 0; j < calib_source_columns_; ++j) {
-          geomtools::geom_id spot_id;
-          mgr.make_id("source_calibration_spot", spot_id);
-          mgr.set(spot_id, "module", 0);
-          mgr.set(spot_id, "track", j);
-          mgr.set(spot_id, "position", i);
-          const geomtools::geom_info & info = mapping.get_geom_info(spot_id);
-          const geomtools::placement & place = info.get_world_placement();
-          const geomtools::vector_3d & pos = place.get_translation();
-          calib_source_Y_[i][j] = pos.getY();
-          calib_source_Z_[i][j] = pos.getZ();
-        }
+  if (geoIdMgr.has_category_info("source_calibration_carrier")) {
+    _has_Bi_source_ = true;
+    sourceCalibrationCarrierType =
+      geoIdMgr.get_category_info("source_calibration_carrier").get_type();
+
+    geomtools::geom_id pattern(sourceCalibrationCarrierType,
+                               0, // module
+                               geomtools::geom_id::ANY_ADDRESS,  // track
+                               geomtools::geom_id::ANY_ADDRESS); // position
+
+    geoMapping.compute_matching_geom_id(pattern, sourceCalibrationCarrierGids);
+
+    if (!sourceCalibrationCarrierGids.empty()) {
+      const geomtools::geom_info      & ginfo = geoMapping.get_geom_info(sourceCalibrationCarrierGids.front());
+      const geomtools::logical_volume & log   = ginfo.get_logical();
+      const geomtools::i_shape_3d     & shape = log.get_shape();
+
+      if (auto box = dynamic_cast<const geomtools::box *>(&shape)) {
+        double x = box->get_z();
+        double y = box->get_y();
+        double z = box->get_x();
+
+        //std::cout << "[SNCuts] Bi carrier box (x,y,z)=("<< x << ", " << y << ", " << z << ")\n";
+
+        _Bi_source_x_ = x;
+        _Bi_source_y_ = y;
+        _Bi_source_z_ = z;
+      } else {
+        //std::cout << "[SNCuts] source_calibration_carrier shape is not a box\n";
       }
-    } else {
-      std::ifstream source_positions_file(source_pos_path_);
-      if (source_positions_file.fail()) {
-        throw std::logic_error(source_pos_path_ + std::string(" does not exist!"));
-      }
-
-      std::cout << "[SNCuts] txt file data " << source_pos_path_ << std::endl;
-
-      int i = 0;
-      std::string line;
-
-      while (getline(source_positions_file, line)) {
-        calib_source_Y_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(0, line.find(";")));
-        calib_source_Z_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(line.find(";") + 1));
-        i++;
-      }
-
-      source_positions_file.close();
     }
+  }
 
-    //********************************************************************************************
+  for (int i = 0; i < calib_source_rows_; ++i) {
+    for (int j = 0; j < calib_source_columns_; ++j) {
+      geomtools::geom_id spot_id;
+      mgr.make_id("source_calibration_spot", spot_id);
+      mgr.set(spot_id, "module", 0);
+      mgr.set(spot_id, "track", j);
+      mgr.set(spot_id, "position", i);
+      const geomtools::geom_info   & info  = mapping.get_geom_info(spot_id);
+      const geomtools::placement   & place = info.get_world_placement();
+      const geomtools::vector_3d   & pos   = place.get_translation();
+      calib_source_Y_[i][j] = pos.getY();
+      calib_source_Z_[i][j] = pos.getZ();
+    }
+  }
+
+} else {
+  std::ifstream source_positions_file(source_pos_path_);
+  if (source_positions_file.fail()) {
+    throw std::logic_error(source_pos_path_ + std::string(" does not exist!"));
+  }
+
+  std::cout << "[SNCuts] txt file data " << source_pos_path_ << std::endl;
+
+  int i = 0;
+  std::string line;
+
+  while (getline(source_positions_file, line)) {
+    calib_source_Y_[i / calib_source_columns_][i % calib_source_columns_] =
+      std::stod(line.substr(0, line.find(";")));
+    calib_source_Z_[i / calib_source_columns_][i % calib_source_columns_] =
+      std::stod(line.substr(line.find(";") + 1));
+    i++;
+  }
+
+  source_positions_file.close();
+}
+
+//********************************************************************************************
 
     try
     {
@@ -695,9 +741,10 @@ snemo::datamodel::precalibrated_data pCDbank;
             if (track.has_trajectory())
             {
                 const snemo::datamodel::tracker_trajectory &trajectory = track.get_trajectory();
-
+                
+/*
                 ptdparticle->set_track_length(trajectory.get_pattern().get_shape().get_length());
-
+                
                 if (TMath::Abs(trajectory.get_pattern().get_first().x())
                     <= trajectory.get_pattern().get_last().x())
                 {
@@ -711,10 +758,39 @@ snemo::datamodel::precalibrated_data pCDbank;
                                   * trajectory.get_pattern().get_last().x() > 0) ? 1.0 : -1.0;
                     geomtools::vector_3d direction = trajectory.get_pattern().get_last_direction() * mul;
                 }
+*/
+//added to prevent crush when there is invalid thack length  of real data********************************************
+	double trackLen = -1.0;
+	try 
+	{
+	trackLen = trajectory.get_pattern().get_shape().get_length();
+	} 
+	catch (const std::exception&) 
+	{
+	trackLen = -1.0; 
+	}
+
+
+	ptdparticle->set_track_length(trackLen);
 
                 // --- kinked tracks inspection (2/4) ---
+                /*
                 int trajectoryKinkCount = trajectory.get_pattern().number_of_kinks();
                 ptdparticle->set_kink_info_from_trajectory(trajectoryKinkCount);
+                */
+                
+        int trajectoryKinkCount = 0;
+	try {
+	trajectoryKinkCount = trajectory.get_pattern().number_of_kinks();
+	} 
+	catch (const std::exception&) 
+	{
+	trajectoryKinkCount = 0; 
+	}
+	ptdparticle->set_kink_info_from_trajectory(trajectoryKinkCount);
+
+//***********************************************************************************                
+                               
             } 
 
             event.add_particle(*ptdparticle);
