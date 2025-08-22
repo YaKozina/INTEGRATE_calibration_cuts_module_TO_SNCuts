@@ -48,11 +48,9 @@ SNCuts::~SNCuts()
     }
 }
 
-void SNCuts::initialize(
-    const datatools::properties &myConfig,
-    datatools::service_manager &flServices,
-    dpp::module_handle_dict_type & /*moduleDict*/
-)
+void SNCuts::initialize(const datatools::properties &myConfig,
+                        datatools::service_manager &flServices,
+                        dpp::module_handle_dict_type & /*moduleDict*/)
 {
     this->_set_initialized(true);
     // -----------------------------------------------------------------------------
@@ -81,252 +79,216 @@ void SNCuts::initialize(
     try
     {
         myConfig.fetch("useEventHasTwoNegativeParticles", this->_useEventHasTwoNegativeParticles_);
-        if (_useEventHasTwoNegativeParticles_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoNegativeParticles");
-        }
+        if (_useEventHasTwoNegativeParticles_) { _filtersToBeUsed.push_back("useEventHasTwoNegativeParticles"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoChargedParticles", this->_useEventHasTwoChargedParticles_);
-        if (_useEventHasTwoChargedParticles_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoChargedParticles");
-        }
+        if (_useEventHasTwoChargedParticles_) { _filtersToBeUsed.push_back("useEventHasTwoChargedParticles"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoParticles", this->_useEventHasTwoParticles_);
-        if (_useEventHasTwoParticles_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoParticles");
-        }
+        if (_useEventHasTwoParticles_) { _filtersToBeUsed.push_back("useEventHasTwoParticles"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasParticles", this->_useEventHasParticles_);
-        if (_useEventHasParticles_)
-        {
-            _filtersToBeUsed.push_back("useEventHasParticles");
-        }
+        if (_useEventHasParticles_) { _filtersToBeUsed.push_back("useEventHasParticles"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoTracks", this->_useEventHasTwoTracks_);
-        if (_useEventHasTwoTracks_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoTracks");
-        }
+        if (_useEventHasTwoTracks_) { _filtersToBeUsed.push_back("useEventHasTwoTracks"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoFoilVertices", this->_useEventHasTwoFoilVertices_);
-        if (_useEventHasTwoFoilVertices_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoFoilVertices");
-        }
+        if (_useEventHasTwoFoilVertices_) { _filtersToBeUsed.push_back("useEventHasTwoFoilVertices"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoCaloHits", this->_useEventHasTwoCaloHits_);
-        if (_useEventHasTwoCaloHits_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoCaloHits");
-        }
+        if (_useEventHasTwoCaloHits_) { _filtersToBeUsed.push_back("useEventHasTwoCaloHits"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasOneCaloHit", this->_useEventHasOneCaloHit_);
-        if (_useEventHasOneCaloHit_)
-        {
-            _filtersToBeUsed.push_back("useEventHasOneCaloHit");
-        }
+        if (_useEventHasOneCaloHit_) { _filtersToBeUsed.push_back("useEventHasOneCaloHit"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoAssociatedCaloHits", this->_useEventHasTwoAssociatedCaloHits_);
-        if (_useEventHasTwoAssociatedCaloHits_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoAssociatedCaloHits");
-        }
+        if (_useEventHasTwoAssociatedCaloHits_) { _filtersToBeUsed.push_back("useEventHasTwoAssociatedCaloHits"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasTwoDistinctAssociatedCaloHits", this->_useEventHasTwoDistinctAssociatedCaloHits_);
-        if (_useEventHasTwoDistinctAssociatedCaloHits_)
-        {
-            _filtersToBeUsed.push_back("useEventHasTwoDistinctAssociatedCaloHits");
-        }
+        if (_useEventHasTwoDistinctAssociatedCaloHits_) { _filtersToBeUsed.push_back("useEventHasTwoDistinctAssociatedCaloHits"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasAssociatedCaloHits", this->_useEventHasAssociatedCaloHits_);
-        if (_useEventHasAssociatedCaloHits_)
-        {
-            _filtersToBeUsed.push_back("useEventHasAssociatedCaloHits");
-        }
+        if (_useEventHasAssociatedCaloHits_) { _filtersToBeUsed.push_back("useEventHasAssociatedCaloHits"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useSDBDRC", this->_useSDBDRC_);
-        if (_useSDBDRC_)
-        {
-            _filtersToBeUsed.push_back("useSDBDRC");
-        }
+        if (_useSDBDRC_) { _filtersToBeUsed.push_back("useSDBDRC"); }
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
+
+    // -----------------------------------------------------------------------------
+    try
+    {
+        myConfig.fetch("useCalibCuts", this->_useCalibCuts_);
+        if (_useCalibCuts_)
+        {
+            _filtersToBeUsed.push_back("useCalibCuts");
+            _useEventHasVertexCloseToCalibSource_ = true;
+            _useEventTrackHasOneAssocCaloHit_     = true;
+            _useEventRejectIfKinkTracks_          = true;
+            _useEventTrackHasCaloChargeAbove_     = true;
+        }
+    }
+    catch (std::logic_error &)
+    {
+    }
+    // -----------------------------------------------------------------------------
 
     try
     {
         myConfig.fetch("useEventHasSumEnergyAbove", this->_useEventHasSumEnergyAbove_);
-        if (_useEventHasSumEnergyAbove_)
-        {
-            _filtersToBeUsed.push_back("useEventHasSumEnergyAbove");
-        }
+        if (_useEventHasSumEnergyAbove_) { _filtersToBeUsed.push_back("useEventHasSumEnergyAbove"); }
         myConfig.fetch("minSumEnergy", this->_minSumEnergy_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasSumEnergyBelow", this->_useEventHasSumEnergyBelow_);
-        if (_useEventHasSumEnergyBelow_)
-        {
-            _filtersToBeUsed.push_back("useEventHasSumEnergyBelow");
-        }
+        if (_useEventHasSumEnergyBelow_) { _filtersToBeUsed.push_back("useEventHasSumEnergyBelow"); }
         myConfig.fetch("maxSumEnergy", this->_maxSumEnergy_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasFoilVertexDistanceBelow", this->_useEventHasFoilVertexDistanceBelow_);
-        if (_useEventHasFoilVertexDistanceBelow_)
-        {
-            _filtersToBeUsed.push_back("useEventHasFoilVertexDistanceBelow");
-        }
+        if (_useEventHasFoilVertexDistanceBelow_) { _filtersToBeUsed.push_back("useEventHasFoilVertexDistanceBelow"); }
         myConfig.fetch("maxFoilVertexDistance", this->_maxFoilVertexDistance_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasPintAbove", this->_useEventHasPintAbove_);
-        if (_useEventHasPintAbove_)
-        {
-            _filtersToBeUsed.push_back("useEventHasPintAbove");
-        }
+        if (_useEventHasPintAbove_) { _filtersToBeUsed.push_back("useEventHasPintAbove"); }
         myConfig.fetch("minPint", this->_minPint_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasPextBelow", this->_useEventHasPextBelow_);
-        if (_useEventHasPextBelow_)
-        {
-            _filtersToBeUsed.push_back("useEventHasPextBelow");
-        }
+        if (_useEventHasPextBelow_) { _filtersToBeUsed.push_back("useEventHasPextBelow"); }
         myConfig.fetch("maxPext", this->_maxPext_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
     try
     {
         myConfig.fetch("useEventHasNEscapedParticles", this->_useEventHasNEscapedParticles_);
-        if (_useEventHasNEscapedParticles_)
-        {
-            _filtersToBeUsed.push_back("useEventHasNEscapedParticles");
-        }
+        if (_useEventHasNEscapedParticles_) { _filtersToBeUsed.push_back("useEventHasNEscapedParticles"); }
         myConfig.fetch("nEscapedParticles", this->_nEscapedParticles_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
-    // new filter "vertex close to calibration source"    
+    // new filter "vertex close to calibration source"
     try
     {
         myConfig.fetch("useEventHasVertexCloseToCalibSource", this->_useEventHasVertexCloseToCalibSource_);
-        if (_useEventHasVertexCloseToCalibSource_)
-        {
-            _filtersToBeUsed.push_back("useEventHasVertexCloseToCalibSource");
-        }
+        if (_useEventHasVertexCloseToCalibSource_) { _filtersToBeUsed.push_back("useEventHasVertexCloseToCalibSource"); }
 
         myConfig.fetch("source_cut_ellipse_Y", this->_source_cut_ellipse_Y_);
         myConfig.fetch("source_cut_ellipse_Z", this->_source_cut_ellipse_Z_);
     }
-    catch (std::logic_error &e)
+    catch (std::logic_error &)
     {
     }
 
-    // ---- read from file/falaise only if the filter is used in other cases ignore and don't read anything form falaise if the file is not provided and used in different filter to prevent bugging
-    if (_useEventHasVertexCloseToCalibSource_)
+    // -----------------------------------------------------------------------------
+    if (_useCalibCuts_)
     {
-        if (myConfig.has_key("source_pos_path"))
-        {
-            source_pos_path_ = myConfig.fetch_string("source_pos_path");
-        }
-        else
-        {
-            source_pos_path_ = "";
-        }
+        try { myConfig.fetch("source_cut_ellipse_Y", this->_source_cut_ellipse_Y_); } catch (std::logic_error &) {}
+        try { myConfig.fetch("source_cut_ellipse_Z", this->_source_cut_ellipse_Z_); } catch (std::logic_error &) {}
+        try { myConfig.fetch("caloChargeMin_nVs",   this->_caloChargeMin_nVs_);   } catch (std::logic_error &) {}
+    }
+    // -----------------------------------------------------------------------------
+
+    // ---- read from file/falaise only if the filter is used in other cases ignore and don't read anything form falaise if the file is not provided and used in different filter to prevent bugging
+    if (_useEventHasVertexCloseToCalibSource_ || _useCalibCuts_)
+    {
+        if (myConfig.has_key("source_pos_path")) { source_pos_path_ = myConfig.fetch_string("source_pos_path"); }
+        else                                     { source_pos_path_ = ""; }
 
         calib_source_Y_.resize(calib_source_rows_, std::vector<double>(calib_source_columns_));
         calib_source_Z_.resize(calib_source_rows_, std::vector<double>(calib_source_columns_));
@@ -336,8 +298,8 @@ void SNCuts::initialize(
         {
             std::cout << "[SNCuts]Falaise geometry service" << std::endl;
 
-            const geomtools::id_mgr    &mgr     = geo_manager_->get_id_mgr();
-            const geomtools::mapping   &mapping = geo_manager_->get_mapping();
+            const geomtools::id_mgr  &mgr     = geo_manager_->get_id_mgr();
+            const geomtools::mapping &mapping = geo_manager_->get_mapping();
 
             const geomtools::mapping &geoMapping = mapping;
             const geomtools::id_mgr  &geoIdMgr   = mgr;
@@ -349,13 +311,12 @@ void SNCuts::initialize(
             if (geoIdMgr.has_category_info("source_calibration_carrier"))
             {
                 _has_Bi_source_ = true;
-                sourceCalibrationCarrierType =
-                    geoIdMgr.get_category_info("source_calibration_carrier").get_type();
+                sourceCalibrationCarrierType = geoIdMgr.get_category_info("source_calibration_carrier").get_type();
 
                 geomtools::geom_id pattern(sourceCalibrationCarrierType,
-                                           0,                                  // module
-                                           geomtools::geom_id::ANY_ADDRESS,    // track
-                                           geomtools::geom_id::ANY_ADDRESS);   // position
+                                           0,                                // module
+                                           geomtools::geom_id::ANY_ADDRESS,  // track
+                                           geomtools::geom_id::ANY_ADDRESS); // position
 
                 geoMapping.compute_matching_geom_id(pattern, sourceCalibrationCarrierGids);
 
@@ -390,12 +351,13 @@ void SNCuts::initialize(
                 {
                     geomtools::geom_id spot_id;
                     mgr.make_id("source_calibration_spot", spot_id);
-                    mgr.set(spot_id, "module", 0);
-                    mgr.set(spot_id, "track", j);
+                    mgr.set(spot_id, "module",  0);
+                    mgr.set(spot_id, "track",   j);
                     mgr.set(spot_id, "position", i);
-                    const geomtools::geom_info   &info  = mapping.get_geom_info(spot_id);
-                    const geomtools::placement   &place = info.get_world_placement();
-                    const geomtools::vector_3d   &pos   = place.get_translation();
+
+                    const geomtools::geom_info &info   = mapping.get_geom_info(spot_id);
+                    const geomtools::placement &place  = info.get_world_placement();
+                    const geomtools::vector_3d &pos    = place.get_translation();
                     calib_source_Y_[i][j] = pos.getY();
                     calib_source_Z_[i][j] = pos.getZ();
                 }
@@ -411,21 +373,16 @@ void SNCuts::initialize(
 
             std::cout << "[SNCuts] txt file data " << source_pos_path_ << std::endl;
 
-            int i = 0;
+            int         i    = 0;
             std::string line;
-
             while (getline(source_positions_file, line))
             {
-                calib_source_Y_[i / calib_source_columns_][i % calib_source_columns_] =
-                    std::stod(line.substr(0, line.find(";")));
-                calib_source_Z_[i / calib_source_columns_][i % calib_source_columns_] =
-                    std::stod(line.substr(line.find(";") + 1));
-                i++;
+                calib_source_Y_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(0, line.find(";")));
+                calib_source_Z_[i / calib_source_columns_][i % calib_source_columns_] = std::stod(line.substr(line.find(";") + 1));
+                ++i;
             }
-
             source_positions_file.close();
         }
-
         // -----------------------------------------------------------------------------
     }
 
@@ -433,10 +390,7 @@ void SNCuts::initialize(
     try
     {
         myConfig.fetch("isThereKinkTrack", this->_useEventRejectIfKinkTracks_);
-        if (_useEventRejectIfKinkTracks_)
-        {
-            _filtersToBeUsed.push_back("isThereKinkTrack");
-        }
+        if (_useEventRejectIfKinkTracks_) { _filtersToBeUsed.push_back("isThereKinkTrack"); }
     }
     catch (std::logic_error &)
     {
@@ -453,10 +407,7 @@ void SNCuts::initialize(
 
         std::istringstream iss(kinkSpec);
         int multiplicity = 0;
-        while (iss >> multiplicity)
-        {
-            _kinkMultiplicityPattern_.push_back(multiplicity);
-        }
+        while (iss >> multiplicity) { _kinkMultiplicityPattern_.push_back(multiplicity); }
 
         if (!_kinkMultiplicityPattern_.empty())
         {
@@ -473,15 +424,11 @@ void SNCuts::initialize(
     try
     {
         myConfig.fetch("useEventTrackHasOneAssocCaloHit", this->_useEventTrackHasOneAssocCaloHit_);
-        if (_useEventTrackHasOneAssocCaloHit_)
-        {
-            _filtersToBeUsed.push_back("useEventTrackHasOneAssocCaloHit");
-        }
+        if (_useEventTrackHasOneAssocCaloHit_) { _filtersToBeUsed.push_back("useEventTrackHasOneAssocCaloHit"); }
     }
     catch (std::logic_error &)
     {
     }
-
     // -----------------------------------------------------------------------------
 
     // -----------------------------------------------------------------------------
@@ -489,16 +436,12 @@ void SNCuts::initialize(
     try
     {
         myConfig.fetch("useEventTrackHasCaloChargeAbove", this->_useEventTrackHasCaloChargeAbove_);
-        if (_useEventTrackHasCaloChargeAbove_)
-        {
-            _filtersToBeUsed.push_back("useEventTrackHasCaloChargeAbove");
-        }
+        if (_useEventTrackHasCaloChargeAbove_) { _filtersToBeUsed.push_back("useEventTrackHasCaloChargeAbove"); }
         myConfig.fetch("caloChargeMin_nVs", this->_caloChargeMin_nVs_);
     }
     catch (std::logic_error &)
     {
     }
-
     // -----------------------------------------------------------------------------
 
     // -----------------------------------------------------------------------------
@@ -555,23 +498,21 @@ void SNCuts::initialize(
     catch (std::exception &)
     {
     }
-
     // -----------------------------------------------------------------------------
 }
 
 dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
 {
-
-    std::unique_ptr<Filters> eventFilter(new Filters(_filtersToBeUsed)); 
+    std::unique_ptr<Filters> eventFilter(new Filters(_filtersToBeUsed));
 
     // new setters for filter "vertex close to calibration source"
     eventFilter->set_source_cut_ellipse_Y(_source_cut_ellipse_Y_);
     eventFilter->set_source_cut_ellipse_Z(_source_cut_ellipse_Z_);
-    eventFilter->set_useEventHasVertexCloseToCalibSource(_useEventHasVertexCloseToCalibSource_);
+    eventFilter->set_useEventHasVertexCloseToCalibSource(_useEventHasVertexCloseToCalibSource_ || _useCalibCuts_);
     eventFilter->set_calib_source_Y(calib_source_Y_);
     eventFilter->set_calib_source_Z(calib_source_Z_);
 
-    eventFilter->set_useEventRejectIfKinkTracks(_useEventRejectIfKinkTracks_);
+    eventFilter->set_useEventRejectIfKinkTracks(_useEventRejectIfKinkTracks_ || _useCalibCuts_);
 
     // new setters for filter "isThereKinkTrack"
     eventFilter->set_min_sum_energy(_minSumEnergy_);
@@ -586,10 +527,10 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
     eventFilter->set_kink_multiplicity_pattern(_kinkMultiplicityPattern_);
 
     // new setters for filter "useEventTrackHasOneAssocCaloHit"
-    eventFilter->set_useEventTrackHasOneAssocCaloHit(_useEventTrackHasOneAssocCaloHit_);
+    eventFilter->set_useEventTrackHasOneAssocCaloHit(_useEventTrackHasOneAssocCaloHit_ || _useCalibCuts_);
 
     // new setters for filter "useEventTrackHasCaloChargeAbove"
-    eventFilter->set_useEventTrackHasCaloChargeAbove(_useEventTrackHasCaloChargeAbove_);
+    eventFilter->set_useEventTrackHasCaloChargeAbove(_useEventTrackHasCaloChargeAbove_ || _useCalibCuts_);
     eventFilter->set_calo_charge_min_nVs(_caloChargeMin_nVs_);
 
     // new setters for "hasNumberofTracks" "hasNumberofNegativeParticles" "hasNumberofFoilVertices" "hasNumberofCaloHits"
@@ -605,12 +546,23 @@ dpp::base_module::process_status SNCuts::process(datatools::things &workItem)
     eventFilter->set_useEventHasNumberOfCaloHits(_useEventHasNumberOfCaloHits_);
     eventFilter->set_number_of_calo_hits_N(_numberOfCaloHits_);
 
-    event = get_event_data(workItem);
+    // *** BUNDLE-MODE to make sure all the enabled filters are applyed to the exact same to the same track
+    // each event passes only if it contains at least 1 tack which obays all the conditions of filters and if there are more tracks which do not pass the filters such event does not fail
+    {
+        bool enableBundle =
+            _useCalibCuts_ ||
+            _useEventHasVertexCloseToCalibSource_ ||
+            _useEventTrackHasOneAssocCaloHit_     ||
+            _useEventTrackHasCaloChargeAbove_     ||
+            _useEventRejectIfKinkTracks_; 
+        eventFilter->set_useTrackBundleMode(enableBundle);
+    }
+    // *** END BUNDLE-MODE
 
+    event = get_event_data(workItem);
 
     const bool passed = eventFilter->event_passed_filters(event);
 
-    //// If event passes all configured filters it is kept in the brio file, it is removed otherwise
     if (passed)
     {
         std::cout << "Event: " << eventNo << " ++PASSED++! " << std::endl;
@@ -688,44 +640,26 @@ Event SNCuts::get_event_data(datatools::things &workItem)
     // -----------------------------------------------------------------------------
     bool has_pCD = workItem.has("pCD");
     snemo::datamodel::precalibrated_data pCDbank;
-    if (has_pCD)
-    {
-        pCDbank = workItem.get<snemo::datamodel::precalibrated_data>("pCD");
-    }
+    if (has_pCD) { pCDbank = workItem.get<snemo::datamodel::precalibrated_data>("pCD"); }
     // -----------------------------------------------------------------------------
 
     if (workItem.has("PTD"))
     {
         using namespace snemo::datamodel;
 
-        snemo::datamodel::particle_track_data PTDbank = workItem.get<particle_track_data>("PTD");
-        snemo::datamodel::ParticleHdlCollection PTDparticles = PTDbank.particles();
+        snemo::datamodel::particle_track_data       PTDbank      = workItem.get<particle_track_data>("PTD");
+        snemo::datamodel::ParticleHdlCollection     PTDparticles = PTDbank.particles();
 
         for (auto &iParticle : PTDparticles)
         {
             PTDParticle *ptdparticle = new PTDParticle();
 
             const snemo::datamodel::particle_track &track = iParticle.get();
-            if (particle_has_negative_charge(track))
-            {
-                ptdparticle->set_charge(-1);
-            }
-            else if (particle_has_neutral_charge(track))
-            {
-                ptdparticle->set_charge(0);
-            }
-            else if (particle_has_positive_charge(track))
-            {
-                ptdparticle->set_charge(1);
-            }
-            else if (particle_has_undefined_charge(track))
-            {
-                ptdparticle->set_charge(1000);
-            }
-            else
-            {
-                ptdparticle->set_charge(1001); // something fishy
-            }
+            if (particle_has_negative_charge(track))      { ptdparticle->set_charge(-1);   }
+            else if (particle_has_neutral_charge(track))  { ptdparticle->set_charge(0);    }
+            else if (particle_has_positive_charge(track)) { ptdparticle->set_charge(1);    }
+            else if (particle_has_undefined_charge(track)){ ptdparticle->set_charge(1000); }
+            else                                          { ptdparticle->set_charge(1001); } // something fishy
 
             if (track.has_vertices())
             {
@@ -772,29 +706,23 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                             vtx.get_spot().get_position().z());
                     }
                     // -----------------------------------------------------------------------------
-                    else if (
-                        _useEventHasVertexCloseToCalibSource_ &&
-                        !calib_source_Y_.empty() &&
-                        vtx.is_on_reference_source_plane())
+                    else if ((_useEventHasVertexCloseToCalibSource_ || _useCalibCuts_) &&
+                             !calib_source_Y_.empty() &&
+                             vtx.is_on_reference_source_plane())
                     {
-                        double ver_y = vtx.get_spot().get_position().y();
-                        double ver_z = vtx.get_spot().get_position().z();
-                        bool is_close = false;
+                        double ver_y   = vtx.get_spot().get_position().y();
+                        double ver_z   = vtx.get_spot().get_position().z();
+                        bool   is_close = false;
 
                         for (int i = 0; i < calib_source_rows_ && !is_close; ++i)
                         {
                             for (int j = 0; j < calib_source_columns_; ++j)
                             {
-                                double dy = ver_y - calib_source_Y_[i][j];
-                                double dz = ver_z - calib_source_Z_[i][j];
-                                double dist =
-                                    (dy * dy) / (_source_cut_ellipse_Y_ * _source_cut_ellipse_Y_) +
-                                    (dz * dz) / (_source_cut_ellipse_Z_ * _source_cut_ellipse_Z_);
-                                if (dist < 1.0)
-                                {
-                                    is_close = true;
-                                    break;
-                                }
+                                double dy   = ver_y - calib_source_Y_[i][j];
+                                double dz   = ver_z - calib_source_Z_[i][j];
+                                double dist = (dy * dy) / (_source_cut_ellipse_Y_ * _source_cut_ellipse_Y_)
+                                            + (dz * dz) / (_source_cut_ellipse_Z_ * _source_cut_ellipse_Z_);
+                                if (dist < 1.0) { is_close = true; break; }
                             }
                         }
 
@@ -817,9 +745,6 @@ Event SNCuts::get_event_data(datatools::things &workItem)
             if (track.has_associated_calorimeter_hits())
             {
                 int assCaloHitNo = 0;
-
-                // const std::vector<datatools::handle<snemo::datamodel::calibrated_calorimeter_hit>> &assCaloHits = track.get_associated_calorimeter_hits();
-                // for (datatools::handle<snemo::datamodel::calibrated_calorimeter_hit> iCaloHit : track.get_associated_calorimeter_hits())
 
                 const auto &assCaloHits = track.get_associated_calorimeter_hits();
                 for (const auto &iCaloHit : assCaloHits)
@@ -889,7 +814,6 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                 {
                     trackLen = -1.0;
                 }
-
                 ptdparticle->set_track_length(trackLen);
 
                 // --- kinked tracks inspection (2/4) ---
@@ -897,7 +821,6 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                 int trajectoryKinkCount = trajectory.get_pattern().number_of_kinks();
                 ptdparticle->set_kink_info_from_trajectory(trajectoryKinkCount);
                 */
-
                 int trajectoryKinkCount = 0;
                 try
                 {
@@ -908,13 +831,13 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                     trajectoryKinkCount = 0;
                 }
                 ptdparticle->set_kink_info_from_trajectory(trajectoryKinkCount);
-
                 // -----------------------------------------------------------------------------
             }
 
             event.add_particle(*ptdparticle);
             delete ptdparticle;
         }
+
         event.set_event_total_energy(totEne);
     }
     else
@@ -927,13 +850,14 @@ Event SNCuts::get_event_data(datatools::things &workItem)
     {
         using namespace snemo::datamodel;
 
-        mctools::simulated_data SD = workItem.get<mctools::simulated_data>("SD");
-        genbb::primary_event primary_event = SD.get_primary_event();
+        mctools::simulated_data   SD            = workItem.get<mctools::simulated_data>("SD");
+        genbb::primary_event      primary_event = SD.get_primary_event();
         list<genbb::primary_particle> primary_particle = primary_event.get_particles();
 
         std::vector<int> processedTrackIDs;
-        int currentTrackID;
+        int  currentTrackID;
         bool trackWasProcessed = false;
+
         for (auto &iPrimaryParticle : primary_particle)
         {
             SDParticle *sdparticle = new SDParticle();
@@ -953,8 +877,7 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                     if (std::find(processedTrackIDs.begin(), processedTrackIDs.end(), currentTrackID) == processedTrackIDs.end())
                     {
                         sdparticle->set_trackID(currentTrackID);
-                        if (
-                            stepHit.get_parent_track_id() == 0 &&
+                        if (stepHit.get_parent_track_id() == 0 &&
                             stepHit.has_material_name() == true &&
                             stepHit.get_material_name() == "tracking_gas")
                         {
@@ -965,6 +888,7 @@ Event SNCuts::get_event_data(datatools::things &workItem)
                     }
                 }
             }
+
             sdparticle->set_has_escaped_foil(hasEscapedFoil);
             event.add_sd_particle(*sdparticle);
             delete sdparticle;
@@ -997,7 +921,6 @@ Event SNCuts::get_event_data(datatools::things &workItem)
         }
 
         event.add_cd_bank(*SNCCDBank);
-
         delete SNCCDBank;
     }
     else

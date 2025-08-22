@@ -2,58 +2,53 @@
 
 ClassImp(Filters);
 
-Filters::Filters()
-{
-}
+Filters::Filters() {}
 
 Filters::Filters(std::vector<std::string> &_filtersToBeUsed)
 {
     for (auto &filter : _filtersToBeUsed)
     {
-        if (filter == "useEventHasTwoNegativeParticles")
-        {
+        if (filter == "useEventHasTwoNegativeParticles") {
             useEventHasTwoNegativeParticles = true;
         }
 
-        if (filter == "useEventHasTwoChargedParticles")
-        {
+        if (filter == "useEventHasTwoChargedParticles") {
             useEventHasTwoChargedParticles = true;
         }
 
-        if (filter == "useEventHasTwoParticles")
-        {
+        if (filter == "useEventHasTwoParticles") {
             useEventHasTwoParticles = true;
         }
-        if (filter == "useEventHasParticles")
-        {
+
+        if (filter == "useEventHasParticles") {
             useEventHasParticles = true;
         }
-        if (filter == "useEventHasTwoTracks")
-        {
+
+        if (filter == "useEventHasTwoTracks") {
             useEventHasTwoTracks = true;
         }
-        if (filter == "useEventHasTwoFoilVertices")
-        {
+
+        if (filter == "useEventHasTwoFoilVertices") {
             useEventHasTwoFoilVertices = true;
         }
-        if (filter == "useEventHasTwoCaloHits")
-        {
+
+        if (filter == "useEventHasTwoCaloHits") {
             useEventHasTwoCaloHits = true;
         }
-        if (filter == "useEventHasOneCaloHit")
-        {
+
+        if (filter == "useEventHasOneCaloHit") {
             useEventHasOneCaloHit = true;
         }
-        if (filter == "useEventHasTwoAssociatedCaloHits")
-        {
+
+        if (filter == "useEventHasTwoAssociatedCaloHits") {
             useEventHasTwoAssociatedCaloHits = true;
         }
-        if (filter == "useEventHasTwoDistinctAssociatedCaloHits")
-        {
+
+        if (filter == "useEventHasTwoDistinctAssociatedCaloHits") {
             useEventHasTwoDistinctAssociatedCaloHits = true;
         }
-        if (filter == "useEventHasAssociatedCaloHits")
-        {
+
+        if (filter == "useEventHasAssociatedCaloHits") {
             useEventHasAssociatedCaloHits = true;
         }
 
@@ -68,69 +63,87 @@ Filters::Filters(std::vector<std::string> &_filtersToBeUsed)
             useEventHasSumEnergyAbove                = true;
             useEventHasSumEnergyBelow                = true;
         }
+
         // -----------------------------------------------------------
-        if (filter == "useEventHasSumEnergyAbove")
-        {
+        if (filter == "useEventHasSumEnergyAbove") {
             useEventHasSumEnergyAbove = true;
         }
-        if (filter == "useEventHasSumEnergyBelow")
-        {
+
+        if (filter == "useEventHasSumEnergyBelow") {
             useEventHasSumEnergyBelow = true;
         }
-        if (filter == "useEventHasFoilVertexDistanceBelow")
-        {
+
+        if (filter == "useEventHasFoilVertexDistanceBelow") {
             useEventHasFoilVertexDistanceBelow = true;
         }
-        if (filter == "useEventHasPintAbove")
-        {
+
+        if (filter == "useEventHasPintAbove") {
             useEventHasPintAbove = true;
         }
-        if (filter == "useEventHasPextBelow")
-        {
+
+        if (filter == "useEventHasPextBelow") {
             useEventHasPextBelow = true;
         }
-        if (filter == "useEventHasNEscapedParticles")
-        {
+
+        if (filter == "useEventHasNEscapedParticles") {
             useEventHasNEscapedParticles = true;
         }
+
         // -----------------------------------------------------------
-        if (filter == "isThereKinkTrack")
-        {
+        if (filter == "isThereKinkTrack") {
             useEventRejectIfKinkTracks_ = true;
+            useTrackBundleMode_         = true; // [BUNDLE]
         }
+
         // -----------------------------------------------------------
-        if (filter == "hasNumberofKinks")
-        {
+        if (filter == "hasNumberofKinks") {
             useEventHasNumberOfKinks_ = true;
         }
+
         // -----------------------------------------------------------
-        if (filter == "useEventTrackHasOneAssocCaloHit")
-        {
+        if (filter == "useEventTrackHasOneAssocCaloHit") {
             useEventTrackHasOneAssocCaloHit_ = true;
+            useTrackBundleMode_              = true; // [BUNDLE]
         }
+
         // -----------------------------------------------------------
-        if (filter == "useEventTrackHasCaloChargeAbove")
-        {
+        if (filter == "useEventTrackHasCaloChargeAbove") {
             useEventTrackHasCaloChargeAbove_ = true;
+            useTrackBundleMode_              = true; // [BUNDLE]
         }
+
         // -----------------------------------------------------------
-        if (filter == "hasNumberofTracks")
-        {
+        if (filter == "hasNumberofTracks") {
             useEventHasNumberOfTracks_ = true;
         }
-        if (filter == "hasNumberofNegativeParticles")
-        {
+
+        if (filter == "hasNumberofNegativeParticles") {
             useEventHasNumberOfNegativeParticles_ = true;
         }
-        if (filter == "hasNumberofFoilVertices")
-        {
+
+        if (filter == "hasNumberofFoilVertices") {
             useEventHasNumberOfFoilVertices_ = true;
         }
-        if (filter == "hasNumberofCaloHits")
-        {
+
+        if (filter == "hasNumberofCaloHits") {
             useEventHasNumberOfCaloHits_ = true;
         }
 
+        // -----------------------------------------------------------
+        if (filter == "useEventHasVertexCloseToCalibSource") {
+            useEventHasVertexCloseToCalibSource = true;
+            useTrackBundleMode_                 = true; // [BUNDLE]
+        }
+
+        // -----------------------------------------------------------
+        if (filter == "useCalibCuts")
+        {
+            useEventHasVertexCloseToCalibSource = true;
+            useEventTrackHasOneAssocCaloHit_    = true;
+            useEventRejectIfKinkTracks_         = true;
+            useEventTrackHasCaloChargeAbove_    = true;
+            useTrackBundleMode_                 = true; // [BUNDLE]
+        }
         // -----------------------------------------------------------
     }
 }
@@ -189,86 +202,57 @@ Filters::~Filters()
     numberOfFoilVertices_N_               = 0;
     useEventHasNumberOfCaloHits_          = false;
     numberOfCaloHits_N_                   = 0;
+
+    // [BUNDLE]
+    useTrackBundleMode_ = false;
 }
 
-void Filters::reset()
-{
-}
+void Filters::reset() {}
 
 bool Filters::event_has_two_negative_particles(Event &_event)
 {
-    if (_event.get_particles().size() != 2)
-    {
-        return false;
-    }
+    if (_event.get_particles().size() != 2) { return false; }
 
     for (auto &particle : _event.get_particles())
     {
-        if (particle.get_charge() != -1)
-        {
-            return false;
-        }
+        if (particle.get_charge() != -1) { return false; }
     }
     return true;
 }
 
 bool Filters::event_has_two_charged_particles(Event &_event)
 {
-    if (_event.get_particles().size() != 2)
-    {
-        return false;
-    }
+    if (_event.get_particles().size() != 2) { return false; }
 
     for (auto &particle : _event.get_particles())
     {
-        if (particle.get_charge() == 0)
-        {
-            return false;
-        }
+        if (particle.get_charge() == 0) { return false; }
     }
     return true;
 }
 
 bool Filters::event_has_particles(Event &_event)
 {
-    if (_event.get_particles().size() > 0)
-    {
-        return true;
-    }
+    if (_event.get_particles().size() > 0) { return true; }
     return false;
 }
 
 bool Filters::event_has_two_particles(Event &_event)
 {
-    if (_event.get_particles().size() == 2)
-    {
-        return true;
-    }
+    if (_event.get_particles().size() == 2) { return true; }
     return false;
 }
 
 bool Filters::event_has_sum_energy_above(Event &_event, double _minSumEnergy)
 {
-    if (_event.get_event_total_energy() > _minSumEnergy)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if (_event.get_event_total_energy() > _minSumEnergy) { return true; }
+    else { return false; }
 }
 
 bool Filters::event_has_sum_energy_below(Event &_event, double _maxSumEnergy)
 {
-    if (_event.get_event_total_energy() < _maxSumEnergy)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if (_event.get_event_total_energy() < _maxSumEnergy) { return true; }
+    else { return false; }
 }
 
 bool Filters::event_has_two_tracks(Event &_event)
@@ -281,33 +265,21 @@ bool Filters::event_has_two_foil_vertices(Event &_event)
     int numberFoilVertices = 0;
     for (auto &particle : _event.get_particles())
     {
-        if (particle.has_foil_vertex())
-        {
-            numberFoilVertices++;
-        }
+        if (particle.has_foil_vertex()) { numberFoilVertices++; }
     }
-    if (numberFoilVertices == 2)
-    {
-        return true;
-    }
+    if (numberFoilVertices == 2) { return true; }
     return false;
 }
 
 bool Filters::event_has_two_calo_hits(Event &_event)
 {
-    if (_event.get_cd_bank().get_number_of_calo_hits() == 2)
-    {
-        return true;
-    }
+    if (_event.get_cd_bank().get_number_of_calo_hits() == 2) { return true; }
     return false;
 }
 
 bool Filters::event_has_one_calo_hit(Event &_event)
 {
-    if (_event.get_cd_bank().get_number_of_calo_hits() == 1)
-    {
-        return true;
-    }
+    if (_event.get_cd_bank().get_number_of_calo_hits() == 1) { return true; }
     return false;
 }
 
@@ -317,10 +289,8 @@ bool Filters::event_has_two_associated_calo_hits(Event &_event)
     {
         for (auto &particle : _event.get_particles())
         {
-            if (particle.get_associated_calo_hits_number() != 1) // if there are multiple calohits associated with single PTD entry: fail
-            {
-                return false;
-            }
+            // if there are multiple calohits associated with single PTD entry: fail
+            if (particle.get_associated_calo_hits_number() != 1) { return false; }
         }
         return true;
     }
@@ -336,14 +306,13 @@ bool Filters::event_has_two_distinct_associated_calo_hits(Event &_event)
     {
         for (auto &particle : _event.get_particles())
         {
-            if (particle.get_associated_calo_hits_number() != 1) // if there are multiple calohits associated with single PTD entry: fail
-            {
-                return false;
-            }
+            // if there are multiple calohits associated with single PTD entry: fail
+            if (particle.get_associated_calo_hits_number() != 1) { return false; }
         }
         if (_event.get_cd_bank().get_number_of_calo_hits() == 2)
         {
-            if (_event.get_cd_bank().get_calo_hit(0).get_gid() == _event.get_cd_bank().get_calo_hit(1).get_gid())
+            if (_event.get_cd_bank().get_calo_hit(0).get_gid() ==
+                _event.get_cd_bank().get_calo_hit(1).get_gid())
             {
                 return false;
             }
@@ -363,15 +332,10 @@ bool Filters::event_has_associated_calo_hits(Event &_event)
     {
         for (auto &particle : _event.get_particles())
         {
-            if (particle.get_associated_calo_hits_number() != 1) // if there are multiple calohits associated with single PTD entry: fail
-            {
-                return false;
-            }
+            // if there are multiple calohits associated with single PTD entry: fail
+            if (particle.get_associated_calo_hits_number() != 1) { return false; }
         }
-        if (_event.get_cd_bank().get_number_of_calo_hits() > 0)
-        {
-            return true;
-        }
+        if (_event.get_cd_bank().get_number_of_calo_hits() > 0) { return true; }
         return (_event.get_cd_bank().get_number_of_calo_hits() > 0);
     }
     else
@@ -380,25 +344,11 @@ bool Filters::event_has_associated_calo_hits(Event &_event)
     }
 }
 
-void Filters::set_min_sum_energy(double _minSumEnergy)
-{
-    minSumEnergy = _minSumEnergy;
-}
+void Filters::set_min_sum_energy(double _minSumEnergy) { minSumEnergy = _minSumEnergy; }
+void Filters::set_max_sum_energy(double _maxSumEnergy) { maxSumEnergy = _maxSumEnergy; }
 
-void Filters::set_max_sum_energy(double _maxSumEnergy)
-{
-    maxSumEnergy = _maxSumEnergy;
-}
-
-double Filters::get_min_sum_energy()
-{
-    return minSumEnergy;
-}
-
-double Filters::get_max_sum_energy()
-{
-    return maxSumEnergy;
-}
+double Filters::get_min_sum_energy() { return minSumEnergy; }
+double Filters::get_max_sum_energy() { return maxSumEnergy; }
 
 void Filters::set_max_foil_vertex_distance(double _maxFoilVertexDistance)
 {
@@ -447,21 +397,22 @@ void Filters::set_calo_charge_min_nVs(double v)
 bool Filters::event_has_foil_vertex_distance_below(Event &_event, double _maxFoilVertexDistance) // is it better if vertex distance is calculated here, or is part of Event?
 {
     double foilVertexDistance = 1000000.0;
-    if (event_has_two_foil_vertices(_event) && event_has_two_tracks(_event)) // Calculate foil vertex distance only if there are 2 foil vertices!
+
+    // Calculate foil vertex distance only if there are 2 foil vertices!
+    if (event_has_two_foil_vertices(_event) && event_has_two_tracks(_event))
     {
-        double dy = _event.get_particles().at(0).get_foil_vertex_position().Y() - _event.get_particles().at(1).get_foil_vertex_position().Y();
-        double dz = _event.get_particles().at(0).get_foil_vertex_position().Z() - _event.get_particles().at(1).get_foil_vertex_position().Z();
+        double dy = _event.get_particles().at(0).get_foil_vertex_position().Y() -
+                    _event.get_particles().at(1).get_foil_vertex_position().Y();
+
+        double dz = _event.get_particles().at(0).get_foil_vertex_position().Z() -
+                    _event.get_particles().at(1).get_foil_vertex_position().Z();
 
         foilVertexDistance = sqrt( // I'm omitting X-component since this doesn't really make sense to use
             pow(dy, 2) +
             pow(dz, 2));
     }
 
-    if (foilVertexDistance < _maxFoilVertexDistance)
-    {
-        return true;
-    }
-
+    if (foilVertexDistance < _maxFoilVertexDistance) { return true; }
     return false;
 }
 
@@ -472,10 +423,7 @@ bool Filters::event_has_vertex_close_to_calib_source(Event &_event)
 {
     for (auto &particle : _event.get_particles())
     {
-        if (!particle.has_calib_vertex())
-        {
-            continue;
-        }
+        if (!particle.has_calib_vertex()) { continue; }
 
         double ver_y = particle.get_calib_vertex_position().Y();
         double ver_z = particle.get_calib_vertex_position().Z();
@@ -490,10 +438,7 @@ bool Filters::event_has_vertex_close_to_calib_source(Event &_event)
                 double dist = (dy * dy) / (source_cut_ellipse_Y_ * source_cut_ellipse_Y_) +
                               (dz * dz) / (source_cut_ellipse_Z_ * source_cut_ellipse_Z_);
 
-                if (dist < 1.0)
-                {
-                    return true;
-                }
+                if (dist < 1.0) { return true; }
             }
         }
     }
@@ -502,14 +447,11 @@ bool Filters::event_has_vertex_close_to_calib_source(Event &_event)
 
 // ------------------------------------------------------------------------------------------------
 
-bool Filters::event_has_kink_tracks(Event &_event)
+bool Filters::event_has_kinked_tracks(Event &_event)
 {
     for (auto &particle : _event.get_particles())
     {
-        if (particle.has_kink_in_trajectory())
-        {
-            return true;
-        }
+        if (particle.has_kink_in_trajectory()) { return true; }
     }
     return false;
 }
@@ -518,48 +460,31 @@ bool Filters::event_has_kink_tracks(Event &_event)
 
 bool Filters::event_has_number_of_kinks(Event &_event)
 {
-    if (kinkMultiplicityPattern_.empty())
-    {
-        return false;
-    }
+    if (kinkMultiplicityPattern_.empty()) { return false; }
 
     std::vector<int> counts(kinkMultiplicityPattern_.size(), 0);
-    int               extraHigher = 0;
+    int extraHigher = 0;
 
     for (auto &particle : _event.get_particles())
     {
-        if (particle.get_track_length() < 0)
-        {
-            continue;
-        }
+        if (particle.get_track_length() < 0) { continue; }
 
         int kinkCount = particle.get_kink_count_in_trajectory();
-        if (kinkCount < 0)
-        {
-            kinkCount = 0;
-        }
+        if (kinkCount < 0) { kinkCount = 0; }
 
-        if (kinkCount < static_cast<int>(counts.size()))
-        {
+        if (kinkCount < static_cast<int>(counts.size())) {
             counts[kinkCount]++;
-        }
-        else
-        {
+        } else {
             extraHigher++;
         }
     }
 
     for (size_t i = 0; i < counts.size(); ++i)
     {
-        if (counts[i] != kinkMultiplicityPattern_[i])
-        {
-            return false;
-        }
+        if (counts[i] != kinkMultiplicityPattern_[i]) { return false; }
     }
-    if (extraHigher > 0)
-    {
-        return false;
-    }
+    if (extraHigher > 0) { return false; }
+
     return true;
 }
 
@@ -585,10 +510,7 @@ bool Filters::event_track_has_calo_charge_above(Event &_event)
     {
         if (particle.get_associated_calo_hits_number() == 1 && particle.has_main_or_x_calo_vertex())
         {
-            if (particle.get_calo_charge_nVs() >= caloChargeMin_nVs_)
-            {
-                return true;
-            }
+            if (particle.get_calo_charge_nVs() >= caloChargeMin_nVs_) { return true; }
         }
     }
     return false;
@@ -607,10 +529,7 @@ bool Filters::event_has_number_of_negative_particles(Event &_event)
     int cnt = 0;
     for (auto &particle : _event.get_particles())
     {
-        if (particle.get_charge() == -1)
-        {
-            ++cnt;
-        }
+        if (particle.get_charge() == -1) { ++cnt; }
     }
     return cnt == numberOfNegativeParticles_N_;
 }
@@ -620,10 +539,7 @@ bool Filters::event_has_number_of_foil_vertices(Event &_event)
     int cnt = 0;
     for (auto &particle : _event.get_particles())
     {
-        if (particle.has_foil_vertex())
-        {
-            ++cnt;
-        }
+        if (particle.has_foil_vertex()) { ++cnt; }
     }
     return cnt == numberOfFoilVertices_N_;
 }
@@ -635,54 +551,23 @@ bool Filters::event_has_number_of_calo_hits(Event &_event)
 
 // ------------------------------------------------------------------------------------------------
 
-void Filters::set_useEventHasNumberOfTracks(bool value)
-{
-    useEventHasNumberOfTracks_ = value;
-}
+void Filters::set_useEventHasNumberOfTracks(bool value) { useEventHasNumberOfTracks_ = value; }
+void Filters::set_number_of_tracks_N(int n)             { numberOfTracks_N_ = n; }
 
-void Filters::set_number_of_tracks_N(int n)
-{
-    numberOfTracks_N_ = n;
-}
+void Filters::set_useEventHasNumberOfNegativeParticles(bool value) { useEventHasNumberOfNegativeParticles_ = value; }
+void Filters::set_number_of_negative_particles_N(int n)            { numberOfNegativeParticles_N_ = n; }
 
-void Filters::set_useEventHasNumberOfNegativeParticles(bool value)
-{
-    useEventHasNumberOfNegativeParticles_ = value;
-}
+void Filters::set_useEventHasNumberOfFoilVertices(bool value) { useEventHasNumberOfFoilVertices_ = value; }
+void Filters::set_number_of_foil_vertices_N(int n)            { numberOfFoilVertices_N_ = n; }
 
-void Filters::set_number_of_negative_particles_N(int n)
-{
-    numberOfNegativeParticles_N_ = n;
-}
-
-void Filters::set_useEventHasNumberOfFoilVertices(bool value)
-{
-    useEventHasNumberOfFoilVertices_ = value;
-}
-
-void Filters::set_number_of_foil_vertices_N(int n)
-{
-    numberOfFoilVertices_N_ = n;
-}
-
-void Filters::set_useEventHasNumberOfCaloHits(bool value)
-{
-    useEventHasNumberOfCaloHits_ = value;
-}
-
-void Filters::set_number_of_calo_hits_N(int n)
-{
-    numberOfCaloHits_N_ = n;
-}
+void Filters::set_useEventHasNumberOfCaloHits(bool value) { useEventHasNumberOfCaloHits_ = value; }
+void Filters::set_number_of_calo_hits_N(int n)           { numberOfCaloHits_N_ = n; }
 
 // ------------------------------------------------------------------------------------------------
 
 bool Filters::event_has_Pint_above(Event &_event, double _minPint)
 {
-    if (_event.get_particles().size() != 2.0)
-    {
-        return false;
-    }
+    if (_event.get_particles().size() != 2.0) { return false; }
 
     double E[2];         // storage for particle energies [MeV]
     double ESigma[2];    // storage for particle energy sigmas [MeV]
@@ -710,33 +595,25 @@ bool Filters::event_has_Pint_above(Event &_event, double _minPint)
         i++;
     }
 
-    double chi2 = get_chi2_int(tExp, l, beta, sigmaTot); // ( (tExp2 - l2/(beta2 * c )) - (tExp1 - l1/(beta1 * c )) )^2 / ( sigmaTot1 + sigmaTot2 )
-    double Pint = TMath::Prob(chi2, 1);                  // returns 1 - P(a,x)
+    // ( (tExp2 - ?2/(beta2 * c )) - (tExp1 - ?1/(beta1 * c )) )^2 / ( sigmaTot1 + sigmaTot2 )
+    double chi2 = get_chi2_int(tExp, l, beta, sigmaTot);
+    double Pint = TMath::Prob(chi2, 1); // returns 1 - P(a,x)
 
-    if (Pint > _minPint)
-    {
-        return true;
-    }
+    if (Pint > _minPint) { return true; }
     return false;
 }
 
-void Filters::set_min_Pint(double _minPint)
-{
-    minPint = _minPint;
-}
+void Filters::set_min_Pint(double _minPint) { minPint = _minPint; }
 
 bool Filters::event_has_Pext_below(Event &_event, double _maxPext)
 {
-    if (_event.get_particles().size() != 2.0)
-    {
-        return false;
-    }
+    if (_event.get_particles().size() != 2.0) { return false; }
 
     double E[2];         // storage for particle energies [MeV]
     double ESigma[2];    // storage for particle energy sigmas [MeV]
     double l[2];         // storage for particle track lengths [mm]
-    double tExp[2];      // storage for particles calo hit times (experimental) [ns]
-    double tExpSigma[2]; // storage for particles calo hit time sigmas [ns]
+    double tExp[2];      // storage for particles cal? hit times (experimental) [ns]
+    double tExpSigma[2]; // storage for particles cal? hit time sigmas [ns]
 
     double beta[2];      // get_beta()
     double tTOF[2];      // get_tTOF()
@@ -758,40 +635,25 @@ bool Filters::event_has_Pext_below(Event &_event, double _maxPext)
         i++;
     }
 
-    double chi2 = get_chi2_ext(tExp, l, beta, sigmaTot); // ( (tExp2 - l2/(beta2 * c )) - (tExp1 - l1/(beta1 * c )) )^2 / ( sigmaTot1 + sigmaTot2 )
-    double Pext = TMath::Prob(chi2, 1);                  // returns 1 - P(a,x)
+    // ( |tExp2 - tExp1| - (l2/(b2 c) + l1/(b1 c)) )^2 / ( sigmaTot1 + sigmaTot2 )
+    double chi2 = get_chi2_ext(tExp, l, beta, sigmaTot);
+    double Pext = TMath::Prob(chi2, 1); // returns 1 - P(a,x)
 
-    if (Pext < _maxPext)
-    {
-        return true;
-    }
-
+    if (Pext < _maxPext) { return true; }
     return false;
 }
 
-void Filters::set_max_Pext(double _maxPext)
-{
-    maxPext = _maxPext;
-}
+void Filters::set_max_Pext(double _maxPext) { maxPext = _maxPext; }
 
 bool Filters::event_has_n_escaped_particles(Event &_event)
 {
     int eventNEscaped = 0;
     for (int i = 0; i < _event.get_sd_particles().size(); i++)
     {
-        if (_event.get_sd_particles().at(i).has_escaped_foil() == true)
-        {
-            eventNEscaped++;
-        }
+        if (_event.get_sd_particles().at(i).has_escaped_foil() == true) { eventNEscaped++; }
     }
-    if (eventNEscaped == nEscapedParticles)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if (eventNEscaped == nEscapedParticles) { return true; }
+    else { return false; }
 }
 
 void Filters::set_n_escaped_particles(int _nEscapedParticles)
@@ -813,127 +675,136 @@ void Filters::set_calib_source_Z(const std::vector<std::vector<double>> &Z)
 
 // ------------------------------------------------------------------------------------------------
 
+bool Filters::event_has_track_bundle_candidate(Event &_event)
+{
+    for (auto &p : _event.get_particles())
+    {
+        bool ok = true;
+
+        if (ok && useEventHasVertexCloseToCalibSource) {
+            const bool near_src = p.has_calib_vertex() || p.has_calibration_source_vertex();
+            if (!near_src) ok = false;
+        }
+
+        if (ok && useEventTrackHasOneAssocCaloHit_) {
+            if (!(p.get_associated_calo_hits_number() == 1 && p.has_main_or_x_calo_vertex()))
+                ok = false;
+        }
+
+        if (ok && useEventTrackHasCaloChargeAbove_) {
+            if (!(p.get_calo_charge_nVs() >= caloChargeMin_nVs_))
+                ok = false;
+        }
+
+        if (ok && useEventRejectIfKinkTracks_) {
+            if (p.has_kink_in_trajectory())
+                ok = false;
+        }
+
+        if (ok) return true;
+    }
+    return false;
+}
+
 bool Filters::event_passed_filters(Event &_event)
 {
-    if (useEventHasTwoNegativeParticles && !event_has_two_negative_particles(_event)) // event doesn't pass filter if filter should be used AND is not fulilled!
-    {
-        return false;
-    }
-    if (useEventHasTwoChargedParticles && !event_has_two_charged_particles(_event)) // event doesn't pass filter if filter should be used AND is not fulilled!
-    {
-        return false;
-    }
-    if (useEventHasTwoParticles && !event_has_two_particles(_event))
-    {
-        return false;
-    }
-    if (useEventHasParticles && !event_has_particles(_event))
-    {
-        return false;
-    }
-    if (useEventHasTwoTracks && !event_has_two_tracks(_event))
-    {
-        return false;
-    }
-    if (useEventHasTwoFoilVertices && !event_has_two_foil_vertices(_event))
-    {
-        return false;
-    }
-    if (useEventHasTwoCaloHits && !event_has_two_calo_hits(_event))
-    {
-        return false;
-    }
-    if (useEventHasOneCaloHit && !event_has_one_calo_hit(_event))
-    {
-        return false;
-    }
-    if (useEventHasTwoAssociatedCaloHits && !event_has_two_associated_calo_hits(_event))
-    {
-        return false;
-    }
-    if (useEventHasTwoDistinctAssociatedCaloHits && !event_has_two_distinct_associated_calo_hits(_event))
-    {
-        return false;
-    }
-    if (useEventHasAssociatedCaloHits && !event_has_associated_calo_hits(_event))
-    {
-        return false;
-    }
-    if (useEventHasSumEnergyAbove && !event_has_sum_energy_above(_event, minSumEnergy))
-    {
-        return false;
-    }
-    if (useEventHasSumEnergyBelow && !event_has_sum_energy_below(_event, maxSumEnergy))
-    {
-        return false;
-    }
-    if (useEventHasFoilVertexDistanceBelow && !event_has_foil_vertex_distance_below(_event, maxFoilVertexDistance))
-    {
-        return false;
-    }
-    if (useEventHasPintAbove && !event_has_Pint_above(_event, minPint))
-    {
-        return false;
-    }
-    if (useEventHasPextBelow && !event_has_Pext_below(_event, maxPext))
-    {
-        return false;
-    }
-    if (useEventHasNEscapedParticles && !event_has_n_escaped_particles(_event))
-    {
-        return false;
-    }
+    const bool anyTrackFilters =
+        useEventHasVertexCloseToCalibSource ||
+        useEventTrackHasOneAssocCaloHit_    ||
+        useEventTrackHasCaloChargeAbove_    ||
+        useEventRejectIfKinkTracks_;
 
-    // new
-    // -----------------------------------------------------------
-    if (useEventHasVertexCloseToCalibSource && !event_has_vertex_close_to_calib_source(_event))
+    if (useTrackBundleMode_ || anyTrackFilters)
     {
-        return false;
-    }
-    // -----------------------------------------------------------
-
-    // new
-    // -----------------------------------------------------------
-    if (useEventRejectIfKinkTracks_ && event_has_kink_tracks(_event))
-    {
-        return false;
-    }
-    // -----------------------------------------------------------
-
-    // new
-    // -----------------------------------------------------------
-    if (useEventHasNumberOfKinks_)
-    {
-        if (!event_has_number_of_kinks(_event))
-        {
+        if (!event_has_track_bundle_candidate(_event)) {
             return false;
         }
     }
-    // -----------------------------------------------------------
-    if (useEventTrackHasOneAssocCaloHit_ && !event_track_has_one_assoc_calo_hit(_event))
-    {
+
+    if (useEventHasTwoNegativeParticles && !event_has_two_negative_particles(_event)) { // event doesn't pass filter if filter should be used AND is not fulilled!
         return false;
     }
-    // -----------------------------------------------------------
-    if (useEventTrackHasCaloChargeAbove_ && !event_track_has_calo_charge_above(_event))
-    {
+    if (useEventHasTwoChargedParticles && !event_has_two_charged_particles(_event)) {   // event doesn't pass filter if filter should be used AND is not fulilled!
         return false;
     }
-    // -----------------------------------------------------------
-    if (useEventHasNumberOfTracks_ && !event_has_number_of_tracks(_event))
-    {
+    if (useEventHasTwoParticles && !event_has_two_particles(_event)) {
         return false;
     }
-    if (useEventHasNumberOfNegativeParticles_ && !event_has_number_of_negative_particles(_event))
-    {
+    if (useEventHasParticles && !event_has_particles(_event)) {
         return false;
     }
-    if (useEventHasNumberOfFoilVertices_ && !event_has_number_of_foil_vertices(_event))
-    {
+    if (useEventHasTwoTracks && !event_has_two_tracks(_event)) {
         return false;
     }
-    if (useEventHasNumberOfCaloHits_ && !event_has_number_of_calo_hits(_event))
+    if (useEventHasTwoFoilVertices && !event_has_two_foil_vertices(_event)) {
+        return false;
+    }
+    if (useEventHasTwoCaloHits && !event_has_two_calo_hits(_event)) {
+        return false;
+    }
+    if (useEventHasOneCaloHit && !event_has_one_calo_hit(_event)) {
+        return false;
+    }
+    if (useEventHasTwoAssociatedCaloHits && !event_has_two_associated_calo_hits(_event)) {
+        return false;
+    }
+    if (useEventHasTwoDistinctAssociatedCaloHits && !event_has_two_distinct_associated_calo_hits(_event)) {
+        return false;
+    }
+    if (useEventHasAssociatedCaloHits && !event_has_associated_calo_hits(_event)) {
+        return false;
+    }
+    if (useEventHasSumEnergyAbove && !event_has_sum_energy_above(_event, minSumEnergy)) {
+        return false;
+    }
+    if (useEventHasSumEnergyBelow && !event_has_sum_energy_below(_event, maxSumEnergy)) {
+        return false;
+    }
+    if (useEventHasFoilVertexDistanceBelow && !event_has_foil_vertex_distance_below(_event, maxFoilVertexDistance)) {
+        return false;
+    }
+    if (useEventHasPintAbove && !event_has_Pint_above(_event, minPint)) {
+        return false;
+    }
+    if (useEventHasPextBelow && !event_has_Pext_below(_event, maxPext)) {
+        return false;
+    }
+    if (useEventHasNEscapedParticles && !event_has_n_escaped_particles(_event)) {
+        return false;
+    }
+
+    if (!(useTrackBundleMode_ || anyTrackFilters))
     {
+        if (useEventHasVertexCloseToCalibSource && !event_has_vertex_close_to_calib_source(_event)) {
+            return false;
+        }
+        if (useEventRejectIfKinkTracks_ && event_has_kinked_tracks(_event)) {
+            return false;
+        }
+        if (useEventTrackHasOneAssocCaloHit_ && !event_track_has_one_assoc_calo_hit(_event)) {
+            return false;
+        }
+        if (useEventTrackHasCaloChargeAbove_ && !event_track_has_calo_charge_above(_event)) {
+            return false;
+        }
+    }
+
+    if (useEventHasNumberOfKinks_)
+    {
+        if (!event_has_number_of_kinks(_event)) {
+            return false;
+        }
+    }
+    if (useEventHasNumberOfTracks_ && !event_has_number_of_tracks(_event)) {
+        return false;
+    }
+    if (useEventHasNumberOfNegativeParticles_ && !event_has_number_of_negative_particles(_event)) {
+        return false;
+    }
+    if (useEventHasNumberOfFoilVertices_ && !event_has_number_of_foil_vertices(_event)) {
+        return false;
+    }
+    if (useEventHasNumberOfCaloHits_ && !event_has_number_of_calo_hits(_event)) {
         return false;
     }
     // -----------------------------------------------------------
@@ -942,7 +813,8 @@ bool Filters::event_passed_filters(Event &_event)
 
 double Filters::get_beta(double _E)
 {
-    return TMath::Sqrt(_E * (_E + 2 * Constants::ELECTRON_MASS_MEV)) / (_E + Constants::ELECTRON_MASS_MEV);
+    return TMath::Sqrt(_E * (_E + 2 * Constants::ELECTRON_MASS_MEV)) /
+           (_E + Constants::ELECTRON_MASS_MEV);
 }
 
 double Filters::get_tTOF(double _l, double _beta)
@@ -956,8 +828,9 @@ double Filters::get_sigmaTot(double _tTOF, double _tExpSigma, double _E, double 
 
     double tExpSigma2 = _tExpSigma * _tExpSigma;
 
+    // this factor equals to (d(tTOF)/d(beta))^2 from propagating uncertainties of tTOF
     double dfdb = pow(_tTOF * _tTOF * m * m, 2) /
-                  pow(_E * (_E + m) * (_E + 2 * m), 2); // this factor equals to (d(tTOF)/d(beta))^2 from propagating uncertainties of tTOF
+                  pow(_E * (_E + m) * (_E + 2 * m), 2);
 
     double ESigma2 = _ESigma * _ESigma;
 

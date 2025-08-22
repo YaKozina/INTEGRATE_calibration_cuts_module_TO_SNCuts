@@ -33,76 +33,82 @@ public:
 
     void reset();  // resets the values of the Filters
 
-    bool event_has_two_negative_particles      (Event &_event);
-    bool event_has_two_charged_particles       (Event &_event);
-    bool event_has_two_particles               (Event &_event);
-    bool event_has_particles                   (Event &_event);
-    bool event_has_two_tracks                  (Event &_event);  // this is equivalend to event_has_two_particles
-    bool event_has_two_foil_vertices           (Event &_event);
-    bool event_has_two_calo_hits               (Event &_event);
-    bool event_has_one_calo_hit                (Event &_event);
-    bool event_has_two_associated_calo_hits    (Event &_event);
+    bool event_has_two_negative_particles            (Event &_event);
+    bool event_has_two_charged_particles             (Event &_event);
+    bool event_has_two_particles                     (Event &_event);
+    bool event_has_particles                         (Event &_event);
+    bool event_has_two_tracks                        (Event &_event);  // this is equivalend to event_has_two_particles
+    bool event_has_two_foil_vertices                 (Event &_event);
+    bool event_has_two_calo_hits                     (Event &_event);
+    bool event_has_one_calo_hit                      (Event &_event);
+    bool event_has_two_associated_calo_hits          (Event &_event);
     bool event_has_two_distinct_associated_calo_hits (Event &_event);
-    bool event_has_associated_calo_hits        (Event &_event);
+    bool event_has_associated_calo_hits              (Event &_event);
 
-    bool event_has_n_escaped_particles         (Event &_event);
-    void set_n_escaped_particles               (int _nEscapeParticles);
-
-    // new
-    // ---------------------------------------------------------------
-    bool event_has_number_of_tracks            (Event &_event);
-    bool event_has_number_of_negative_particles(Event &_event);
-    bool event_has_number_of_foil_vertices     (Event &_event);
-    bool event_has_number_of_calo_hits         (Event &_event);
-
-    void set_useEventHasNumberOfTracks         (bool value);
-    void set_number_of_tracks_N                (int n);
-
-    void set_useEventHasNumberOfNegativeParticles(bool value);
-    void set_number_of_negative_particles_N      (int n);
-
-    void set_useEventHasNumberOfFoilVertices   (bool value);
-    void set_number_of_foil_vertices_N         (int n);
-
-    void set_useEventHasNumberOfCaloHits       (bool value);
-    void set_number_of_calo_hits_N             (int n);
-    // ---------------------------------------------------------------
-
-    bool   event_has_sum_energy_above          (Event &_event, double _minEnergy);
-    bool   event_has_sum_energy_below          (Event &_event, double _maxEnergy);
-    void   set_min_sum_energy                  (double _minSumEnergy);
-    void   set_max_sum_energy                  (double _maxSumEnergy);
-
-    bool   event_has_foil_vertex_distance_below(Event &_event, double _maxFoilVertexDistance);
-    void   set_max_foil_vertex_distance        (double _maxFoilVertexDistance);
-
-    bool   event_has_Pint_above                (Event &_event, double _minPint);
-    void   set_min_Pint                        (double _minPint);
-
-    bool   event_has_Pext_below                (Event &_event, double _maxPext);
-    void   set_max_Pext                        (double _maxPext);
-
-    double get_min_sum_energy                  ();
-    double get_max_sum_energy                  ();
-
-    bool   event_passed_filters                (Event &_event);
+    bool event_has_n_escaped_particles (Event &_event);
+    void set_n_escaped_particles       (int _nEscapeParticles);
 
     // new
     // ---------------------------------------------------------------
-    void set_source_cut_ellipse_Y              (double _cut_ellipse_Y);
-    void set_source_cut_ellipse_Z              (double _cut_ellipse_Z);
+    bool event_has_number_of_tracks             (Event &_event);
+    bool event_has_number_of_negative_particles (Event &_event);
+    bool event_has_number_of_foil_vertices      (Event &_event);
+    bool event_has_number_of_calo_hits          (Event &_event);
 
-    void set_calib_source_Y                    (const std::vector<std::vector<double>> &Y);
-    void set_calib_source_Z                    (const std::vector<std::vector<double>> &Z);
+    void set_useEventHasNumberOfTracks          (bool value);
+    void set_number_of_tracks_N                 (int n);
+
+    void set_useEventHasNumberOfNegativeParticles (bool value);
+    void set_number_of_negative_particles_N       (int n);
+
+    void set_useEventHasNumberOfFoilVertices    (bool value);
+    void set_number_of_foil_vertices_N          (int n);
+
+    void set_useEventHasNumberOfCaloHits        (bool value);
+    void set_number_of_calo_hits_N              (int n);
     // ---------------------------------------------------------------
 
-    bool event_has_vertex_close_to_calib_source(Event &_event);
+    // --- bundle-mode (ckeck if there is a track which obays all the filters at the same time) ---
+    bool event_has_track_bundle_candidate(Event &_event);
+    void set_useTrackBundleMode(bool value) { useTrackBundleMode_ = value; }
+
+    // ---------------------------------------------------------------
+
+    bool   event_has_sum_energy_above           (Event &_event, double _minEnergy);
+    bool   event_has_sum_energy_below           (Event &_event, double _maxEnergy);
+    void   set_min_sum_energy                   (double _minSumEnergy);
+    void   set_max_sum_energy                   (double _maxSumEnergy);
+
+    bool   event_has_foil_vertex_distance_below (Event &_event, double _maxFoilVertexDistance);
+    void   set_max_foil_vertex_distance         (double _maxFoilVertexDistance);
+
+    bool   event_has_Pint_above                 (Event &_event, double _minPint);
+    void   set_min_Pint                         (double _minPint);
+
+    bool   event_has_Pext_below                 (Event &_event, double _maxPext);
+    void   set_max_Pext                         (double _maxPext);
+
+    double get_min_sum_energy                   ();
+    double get_max_sum_energy                   ();
+
+    bool   event_passed_filters                 (Event &_event);
+
+    // new
+    // ---------------------------------------------------------------
+    void set_source_cut_ellipse_Y (double _cut_ellipse_Y);
+    void set_source_cut_ellipse_Z (double _cut_ellipse_Z);
+
+    void set_calib_source_Y       (const std::vector<std::vector<double>> &Y);
+    void set_calib_source_Z       (const std::vector<std::vector<double>> &Z);
+    // ---------------------------------------------------------------
+
+    bool event_has_vertex_close_to_calib_source (Event &_event);
     void set_useEventHasVertexCloseToCalibSource(bool value);
 
     // ---------------------------------------------------------------
-    bool event_has_kink_tracks                 (Event &_event);
+    bool event_has_kinked_tracks (Event &_event);
 
-    void set_useEventRejectIfKinkTracks        (bool use)
+    void set_useEventRejectIfKinkTracks(bool use)
     {
         useEventRejectIfKinkTracks_ = use;
     }
@@ -110,13 +116,13 @@ public:
 
     // new
     // ---------------------------------------------------------------
-    bool event_has_number_of_kinks             (Event &_event);
+    bool event_has_number_of_kinks (Event &_event);
 
-    void set_useEventHasNumberOfKinks          (bool value)
+    void set_useEventHasNumberOfKinks(bool value)
     {
         useEventHasNumberOfKinks_ = value;
     }
-    void set_kink_multiplicity_pattern         (const std::vector<int> &pattern)
+    void set_kink_multiplicity_pattern(const std::vector<int> &pattern)
     {
         kinkMultiplicityPattern_ = pattern;
     }
@@ -124,95 +130,102 @@ public:
 
     // new
     // ---------------------------------------------------------------
-    bool event_track_has_one_assoc_calo_hit    (Event &_event);
-    void set_useEventTrackHasOneAssocCaloHit   (bool value);
+    bool event_track_has_one_assoc_calo_hit (Event &_event);
+    void set_useEventTrackHasOneAssocCaloHit(bool value);
     // ---------------------------------------------------------------
 
     // new
     // ---------------------------------------------------------------
-    bool  event_track_has_calo_charge_above    (Event &_event);
-    void  set_useEventTrackHasCaloChargeAbove  (bool value);
-    void  set_calo_charge_min_nVs              (double value);
+    bool  event_track_has_calo_charge_above   (Event &_event);
+    void  set_useEventTrackHasCaloChargeAbove (bool value);
+    void  set_calo_charge_min_nVs             (double value);
     // ---------------------------------------------------------------
 
 private:
     // std::vector<FilterFunction> filters;
 
-    bool   useEventHasTwoNegativeParticles      = false;
-    bool   useEventHasTwoChargedParticles       = false;
-    bool   useEventHasTwoParticles              = false;
-    bool   useEventHasParticles                 = false;
-    bool   useEventHasTwoTracks                 = false;
-    bool   useEventHasTwoFoilVertices           = false;
-    bool   useEventHasTwoCaloHits               = false;
-    bool   useEventHasOneCaloHit                = false;
-    bool   useEventHasTwoAssociatedCaloHits     = false;
-    bool   useEventHasTwoDistinctAssociatedCaloHits = false;
-    bool   useEventHasAssociatedCaloHits        = false;
+    bool   useEventHasTwoNegativeParticles            = false;
+    bool   useEventHasTwoChargedParticles             = false;
+    bool   useEventHasTwoParticles                    = false;
+    bool   useEventHasParticles                       = false;
+    bool   useEventHasTwoTracks                       = false;
+    bool   useEventHasTwoFoilVertices                 = false;
+    bool   useEventHasTwoCaloHits                     = false;
+    bool   useEventHasOneCaloHit                      = false;
+    bool   useEventHasTwoAssociatedCaloHits           = false;
+    bool   useEventHasTwoDistinctAssociatedCaloHits   = false;
+    bool   useEventHasAssociatedCaloHits              = false;
 
-    bool   useSDBDRC                            = false;
-
-    bool   useEventHasSumEnergyAbove            = false;
+    bool   useSDBDRC                                   = false;
+    // ---------------------------------------------------------------
+    bool   useCalibCuts                                 = false;
+    // ---------------------------------------------------------------
+    bool   useEventHasSumEnergyAbove                    = false;
     double minSumEnergy;
 
-    bool   useEventHasSumEnergyBelow            = false;
+    bool   useEventHasSumEnergyBelow                    = false;
     double maxSumEnergy;
 
-    bool   useEventHasFoilVertexDistanceBelow   = false;
+    bool   useEventHasFoilVertexDistanceBelow           = false;
     double maxFoilVertexDistance;
 
-    bool   useEventHasPintAbove                 = false;
+    bool   useEventHasPintAbove                         = false;
     double minPint;
 
-    bool   useEventHasPextBelow                 = false;
+    bool   useEventHasPextBelow                         = false;
     double maxPext;
 
-    bool   useEventHasNEscapedParticles         = false;
+    bool   useEventHasNEscapedParticles                 = false;
     int    nEscapedParticles;
 
     // new for filter "vertex close to calibration source" (1/4 filters)
     // ---------------------------------------------------------------
     // 1 event has at least 1 track which has vertes close to the calobration source
-    bool useEventHasVertexCloseToCalibSource    = false;
+    bool useEventHasVertexCloseToCalibSource = false;
     // ---------------------------------------------------------------
 
     // new for filter "kinked tracks inspection" (2/4)
     // ---------------------------------------------------------------
     // 1 event has at least 1 kinked track to be declined
-    bool useEventRejectIfKinkTracks_            = false;
+    bool useEventRejectIfKinkTracks_ = false;
     // ---------------------------------------------------------------
 
     // new for filter "number of kinked tracks" (additional)
     // ---------------------------------------------------------------
-    bool               useEventHasNumberOfKinks_ = false;
-    std::vector<int>   kinkMultiplicityPattern_;
+    bool             useEventHasNumberOfKinks_ = false;
+    std::vector<int> kinkMultiplicityPattern_;
     // ---------------------------------------------------------------
 
     // new for filter "1 track has 1 associated calo hit"
     // ---------------------------------------------------------------
-    bool useEventTrackHasOneAssocCaloHit_       = false;
+    bool useEventTrackHasOneAssocCaloHit_ = false;
     // ---------------------------------------------------------------
 
     // new for filter "EventTrackHasCaloChargeAbove"
     // ---------------------------------------------------------------
-    bool   useEventTrackHasCaloChargeAbove_     = false;
-    double caloChargeMin_nVs_                   = -1.0;
+    bool   useEventTrackHasCaloChargeAbove_ = false;
+    double caloChargeMin_nVs_               = -1.0;
     // ---------------------------------------------------------------
 
     // new for filters "hasNumberofTracks" "hasNumberofNegativeParticles" "hasNumberofFoilVertices" "hasNumberofCaloHits"
     // ---------------------------------------------------------------
-    bool useEventHasNumberOfTracks_             = false;
-    int  numberOfTracks_N_                      = 0;
+    bool useEventHasNumberOfTracks_            = false;
+    int  numberOfTracks_N_                     = 0;
 
-    bool useEventHasNumberOfNegativeParticles_  = false;
-    int  numberOfNegativeParticles_N_           = 0;
+    bool useEventHasNumberOfNegativeParticles_ = false;
+    int  numberOfNegativeParticles_N_          = 0;
 
-    bool useEventHasNumberOfFoilVertices_       = false;
-    int  numberOfFoilVertices_N_                = 0;
+    bool useEventHasNumberOfFoilVertices_      = false;
+    int  numberOfFoilVertices_N_               = 0;
 
-    bool useEventHasNumberOfCaloHits_           = false;
-    int  numberOfCaloHits_N_                    = 0;
+    bool useEventHasNumberOfCaloHits_          = false;
+    int  numberOfCaloHits_N_                   = 0;
     // ---------------------------------------------------------------
+
+    // if true instead of checking each criteria for tracks separately at event_passed_filters()
+    // there are used all of them at the same time - this filter activates checking for all the active
+    // filters to be applied to the same track at the same time not separately
+    bool useTrackBundleMode_ = false;
 
     // calib source parameters for the filter "vertex close to calibration source" (1/4 filters)
     double source_cut_ellipse_Y_ = 25.0;
@@ -231,7 +244,7 @@ private:
     double get_chi2_int (double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]);
     double get_chi2_ext (double _tExp[2], double _l[2], double _beta[2], double _sigmaTot[2]);
 
-    ClassDef(Filters,1);
+    ClassDef(Filters, 1);
 };
 
 #endif // FILTERS_HH
